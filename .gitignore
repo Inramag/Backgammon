@@ -1,0 +1,10 @@
+// VSCode
+.vscode/
+
+// Unity
+Build/
+Library/
+Logs/
+Temp/
+UserSettings/
+Backgammon.slnx

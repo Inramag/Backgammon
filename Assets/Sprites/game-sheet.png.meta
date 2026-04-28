@@ -1,0 +1,584 @@
+fileFormatVersion: 2
+guid: e853ec4468aab454fad2f120903bc080
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6530179738444782934
+    second: sheet_0
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 512
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: checker-1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65d547dafdbdf9a50800000000000000
+      internalID: 6530179738444782934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: checker-2
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 256
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3245c04287080cf42abaac97b7aa86c4
+      internalID: -176826330
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dice-1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 256
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a9303fa479627248ac578b450f052f8
+      internalID: -2067619731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dice-2
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 256
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50316731fda19704fae5cf29c079554c
+      internalID: -346735463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dice-3
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 256
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c6dc1dfab77f0214d92c776b31e05e84
+      internalID: 826624413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dice-4
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 256
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd58d593d8f1d0441b4166f9cf37deb7
+      internalID: 1340096739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dice-5
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 256
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b095520468a1e3544bf7d0c7b05276ff
+      internalID: 998918982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dice-6
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 256
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50a757e87fdf06041889bd09b0a4b267
+      internalID: -2120712520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: board
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e74eb89f3b3ca6748acb2d5a3d3ba2c9
+      internalID: 1693974518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: c3cac42235694b4458f114beb280f6e3
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":16.0,"y":16.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      board: 1693974518
+      checker-1: 6530179738444782934
+      checker-2: -176826330
+      dice-1: -2067619731
+      dice-2: -346735463
+      dice-3: 826624413
+      dice-4: 1340096739
+      dice-5: 998918982
+      dice-6: -2120712520
+      sheet_10: 770564175
+      sheet_100: 1915207782
+      sheet_101: 1130407525
+      sheet_102: 795137804
+      sheet_103: 797275928
+      sheet_104: 2129683383
+      sheet_105: 1110412423
+      sheet_106: 270400914
+      sheet_107: 1154753106
+      sheet_108: 653377254
+      sheet_109: -2127792964
+      sheet_11: 1407257450
+      sheet_110: -1522687094
+      sheet_111: 1247559789
+      sheet_112: -1111366673
+      sheet_113: -999380306
+      sheet_114: -1892276425
+      sheet_115: 2022361537
+      sheet_116: 748581822
+      sheet_117: 1002158656
+      sheet_118: 1682015790
+      sheet_119: 1712121017
+      sheet_12: -408878240
+      sheet_120: -283717148
+      sheet_121: -1357050770
+      sheet_122: 1214665301
+      sheet_123: -1499788887
+      sheet_124: -1071100503
+      sheet_125: -1532103399
+      sheet_126: -491634759
+      sheet_127: -1229241226
+      sheet_128: 1856884584
+      sheet_129: -611190640
+      sheet_13: 1638592356
+      sheet_130: -962705197
+      sheet_131: -2088510118
+      sheet_132: -757637829
+      sheet_133: -970500316
+      sheet_134: -1906984891
+      sheet_135: -520003931
+      sheet_136: -1296992947
+      sheet_137: -1490412898
+      sheet_138: 505142850
+      sheet_139: -1424959000
+      sheet_14: 1305766188
+      sheet_140: 586476764
+      sheet_141: -944561012
+      sheet_142: 229565360
+      sheet_143: -965180044
+      sheet_144: 254658219
+      sheet_145: -1693016073
+      sheet_146: -1217536144
+      sheet_147: 1791066326
+      sheet_148: 197498396
+      sheet_149: 1304553429
+      sheet_15: 1175507819
+      sheet_150: 1228052074
+      sheet_151: 1908612531
+      sheet_152: 1092985263
+      sheet_153: -104143910
+      sheet_154: 181631009
+      sheet_155: 1608313553
+      sheet_156: -497607828
+      sheet_157: 156298140
+      sheet_158: -1691789952
+      sheet_159: -728115562
+      sheet_16: 1841825362
+      sheet_160: -1138425713
+      sheet_161: -424407930
+      sheet_162: -1152120743
+      sheet_163: 189936547
+      sheet_164: 695780552
+      sheet_165: 2136034060
+      sheet_166: -333302691
+      sheet_167: 1261283257
+      sheet_168: 69452485
+      sheet_169: 1932036032
+      sheet_17: 1470942889
+      sheet_170: 1304115171
+      sheet_171: 1282471648
+      sheet_172: 280065177
+      sheet_173: 1424175680
+      sheet_174: -2049637250
+      sheet_175: -783421144
+      sheet_176: -216638237
+      sheet_177: 1627985745
+      sheet_178: 203483188
+      sheet_179: -333396169
+      sheet_18: 1908432149
+      sheet_180: -544740108
+      sheet_181: 16158474
+      sheet_182: 1692951023
+      sheet_183: -599702662
+      sheet_184: -1017782200
+      sheet_185: 435725221
+      sheet_186: -1507502699
+      sheet_187: -1963207545
+      sheet_188: -960867270
+      sheet_189: -68097469
+      sheet_19: -1034001005
+      sheet_190: -1072062525
+      sheet_191: -714650716
+      sheet_192: 1825307496
+      sheet_193: -877121372
+      sheet_194: 796732564
+      sheet_195: 770998751
+      sheet_196: -1821868927
+      sheet_197: 1610440515
+      sheet_198: 1756402604
+      sheet_199: 397959043
+      sheet_20: -1632257849
+      sheet_200: 1366039346
+      sheet_201: -171476254
+      sheet_202: 1622226306
+      sheet_203: 674553916
+      sheet_204: 699093137
+      sheet_205: -1333150210
+      sheet_206: 1074721901
+      sheet_207: -980653222
+      sheet_208: -1695313413
+      sheet_209: 265089827
+      sheet_21: -1687595804
+      sheet_210: 705416322
+      sheet_211: -1343504528
+      sheet_212: -1135302130
+      sheet_213: 1087689563
+      sheet_214: -1730585009
+      sheet_215: 1546289775
+      sheet_216: -973809821
+      sheet_217: 1583146085
+      sheet_218: 1041819772
+      sheet_219: 2074813018
+      sheet_22: 2069956207
+      sheet_220: -457054392
+      sheet_221: 1427844177
+      sheet_222: -1986961311
+      sheet_223: -2027581687
+      sheet_224: -627224200
+      sheet_225: -1026347406
+      sheet_226: 419468269
+      sheet_227: -957449899
+      sheet_228: 1589439471
+      sheet_229: 205106600
+      sheet_23: 1220712219
+      sheet_230: 48684934
+      sheet_231: -2080135342
+      sheet_232: 1394415774
+      sheet_233: 116748953
+      sheet_234: 1125212689
+      sheet_235: -1351137447
+      sheet_236: -2017464884
+      sheet_237: 1729815766
+      sheet_238: -464101584
+      sheet_239: -843701851
+      sheet_24: -555341823
+      sheet_240: 1566510623
+      sheet_241: 1833780115
+      sheet_242: 1825178919
+      sheet_243: -612101230
+      sheet_244: 717724881
+      sheet_245: -878618634
+      sheet_246: 1966981361
+      sheet_247: -1154976644
+      sheet_248: 508603983
+      sheet_249: -839087694
+      sheet_25: 23634574
+      sheet_250: -879136484
+      sheet_251: -1157911387
+      sheet_252: -140122005
+      sheet_253: 1230412711
+      sheet_254: 1604117648
+      sheet_255: 135343166
+      sheet_256: 480823277
+      sheet_257: 1677197289
+      sheet_258: 1599053455
+      sheet_259: -2066703446
+      sheet_26: 968544858
+      sheet_260: -131571869
+      sheet_261: -1338607770
+      sheet_262: -1977826001
+      sheet_263: -1506118915
+      sheet_27: 1450209661
+      sheet_28: 357880361
+      sheet_29: -166944091
+      sheet_30: -456803572
+      sheet_31: 595464139
+      sheet_32: 350433078
+      sheet_33: 1328816158
+      sheet_34: -1782648131
+      sheet_35: 1698992714
+      sheet_36: -113778350
+      sheet_37: 1945715219
+      sheet_38: -1345205888
+      sheet_39: 1108552163
+      sheet_40: 547284173
+      sheet_41: 621148223
+      sheet_42: 453372802
+      sheet_43: -1988315581
+      sheet_44: -818141904
+      sheet_45: -1221988452
+      sheet_46: 808728590
+      sheet_47: 1194184833
+      sheet_48: 934645775
+      sheet_49: 73971524
+      sheet_50: -925127650
+      sheet_51: 634971292
+      sheet_52: 1519889880
+      sheet_53: -1201196280
+      sheet_54: -1848753446
+      sheet_55: -1275787737
+      sheet_56: -1314030642
+      sheet_57: -1323203701
+      sheet_58: 232419201
+      sheet_59: -1333343940
+      sheet_60: 957011467
+      sheet_61: 1335460396
+      sheet_62: -552685827
+      sheet_63: -492942689
+      sheet_64: -1010201116
+      sheet_65: 645463846
+      sheet_66: 2136481732
+      sheet_67: -1513990933
+      sheet_68: 904110064
+      sheet_69: 386624579
+      sheet_70: -4913086
+      sheet_71: 486383174
+      sheet_72: 492374815
+      sheet_73: 447313659
+      sheet_74: 1207397012
+      sheet_75: -717235677
+      sheet_76: -29841532
+      sheet_77: -84029971
+      sheet_78: -587320062
+      sheet_79: -1868856785
+      sheet_80: -1350546907
+      sheet_81: -1854949334
+      sheet_82: 1854827062
+      sheet_83: -657781854
+      sheet_84: -1638077259
+      sheet_85: -2135401660
+      sheet_86: 1914314624
+      sheet_87: -1484667335
+      sheet_88: -914808903
+      sheet_89: 377267542
+      sheet_9: 1217102059
+      sheet_90: -1527984628
+      sheet_91: 637578908
+      sheet_92: -775658872
+      sheet_93: -1442275686
+      sheet_94: 2143161004
+      sheet_95: 1886827993
+      sheet_96: 993159853
+      sheet_97: 1765483449
+      sheet_98: -430460129
+      sheet_99: 1135906970
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
