@@ -96,6 +96,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 512
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -293,6 +306,28 @@ TextureImporter:
       bones: []
       spriteID: e74eb89f3b3ca6748acb2d5a3d3ba2c9
       internalID: 1693974518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: targ
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 256
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b47f32b509c0e34ea63121673bff6b8
+      internalID: 1854033985
       vertices: []
       indices: 
       edges: []
@@ -577,6 +612,7 @@ TextureImporter:
       sheet_97: 1765483449
       sheet_98: -430460129
       sheet_99: 1135906970
+      targ: 1854033985
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
