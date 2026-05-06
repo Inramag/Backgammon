@@ -1,11 +1,12 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 namespace Offline {
     public class Cell : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler  {
-        // отражение шашек
         [SerializeField] bool isrev;
         int _mcount = 6;
 
@@ -19,27 +20,27 @@ namespace Offline {
                 _targetImage.SetActive(value);
             }
         }
+        public List<int> usedDices = new(); 
 
         [SerializeField] int _id;
         public int id => _id;
-        public byte side = 0; // 0 - empty, 1 - white, 2 - black
+        public byte side = 0; // 0 - empty, 1 - black, 2 - white
         public List<GameObject> checkers = new ();
         public byte count => (byte)checkers.Count;
 
-        public bool CanAdd(byte s) {
-            var b =  (side == 0 || side == s);
-            return b;
-        }
+        public Action<Cell> onClick;
+
+        public bool CanAdd(byte s) => side == 0 || side == s;
         public void Add(GameObject checker) {
             checkers.Add(checker);
             checker.transform.SetParent(transform);
             var ismax = count > _mcount;
             checker.transform.localPosition = new Vector3(
-                0, (isrev ? -1 : 1) * (3 * 64 - (ismax ? _mcount : count) * 64 + 32), 0
+                0, (isrev ? -1 : 1) * (192 - (ismax ? _mcount : count) * 64 + 32), 0
             );
             if (ismax) {
                 checkers[^2].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "";
-                checker.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = ismax ? (count - _mcount + 1).ToString() : "";
+                checker.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = ismax ? (count-_mcount+1).ToString() : "";
             }
         }
         public void Remove() {
@@ -56,7 +57,7 @@ namespace Offline {
         public void OnPointerEnter(PointerEventData _) {
             targpos = new Vector3(
                 transform.position.x,
-                544 + (isrev ? -10 : 10),
+                544 + 20 * (isrev ? -1 : 1),
                 0
             );
         }
@@ -70,7 +71,8 @@ namespace Offline {
                 Add(GameManager.instance.selectedChecker);
                 GameManager.instance.isMoving = false;
                 side = s;
-            } else if (count != 0) StartCoroutine(GameManager.instance.StartMoveChecker(this));
+                onClick?.Invoke(this);
+            } else if (count != 0 && side == (GameManager.instance.iswturn ? 2 : 1)) StartCoroutine(GameManager.instance.StartMoveChecker(this));
         }
 
         public static bool operator ==(Cell a, Cell b) => a.id == b.id;

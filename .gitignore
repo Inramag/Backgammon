@@ -3,6 +3,9 @@
 .editorconfig
 
 // Unity
+Assets/_Recovery/
+Assets/_Recovery.meta
+
 Build/
 Library/
 Logs/
