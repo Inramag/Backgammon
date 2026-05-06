@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -23,8 +22,6 @@ namespace Offline {
         public Home homeb, homew;
 
         readonly Cell[] cells = new Cell[24];
-        bool isdouble = false;
-        readonly List<int> dices = new();
 
         public bool isMoving;
         public Cell fromCell, toCell;
@@ -69,7 +66,7 @@ namespace Offline {
         IEnumerator Turn() {
             yield return new WaitForSeconds(1f);
 
-            yield return StartCoroutine(Roll());
+            yield return StartCoroutine(Dice.instance.Roll());
 
             blocker.raycastTarget = false;
             while (!isturncompl) yield return null;
@@ -77,35 +74,7 @@ namespace Offline {
 
             isturncompl = false;
             iswturn = !iswturn;
-        }
-
-        
-
-        public IEnumerator Roll() {
-            dices.Clear();
-            var dices1 = new List<int>();
-            var dices2 = new List<int>();
-            for (int i = 0; i < Random.Range(5, 15); i++) {
-                dices1.Add(Random.Range(1, 7));
-                dices2.Add(Random.Range(1, 7));
-                Debug.Log($"Roll {i}: {dices1[i]} and {dices2[i]}");
-            }
-            for (int i = 0; i < dices1.Count; i++) {
-                dice1.sprite = diceSprites[dices1[i]];
-                dice2.sprite = diceSprites[dices2[i]];
-                yield return new WaitForSeconds(i * 0.1f);
-            }
-            yield return new WaitForSeconds(0.6f);
-            
-            if (dices1[^1] == dices2[^1]) {
-                dices.AddRange(new []{dices1[^1], dices1[^1], dices1[^1], dices1[^1]});
-                isdouble = true;
-            } else {
-                dices.Add(dices1[^1]);
-                dices.Add(dices2[^1]);
-                isdouble = false;
-            }
-            Debug.Log($"Final dice values: {string.Join(", ", dices)}");
+            isFromHead = false;
         }
         
         public IEnumerator StartMoveChecker(Cell cell) {
@@ -116,7 +85,9 @@ namespace Offline {
             selectedChecker = cell.checkers[^1];
             cell.Remove();
 
-            if (isdouble) {
+            var dices = Dice.dices;
+
+            if (Dice.isDouble) {
                 int sum = 0;
                 var d = dices[0];
 
@@ -132,7 +103,7 @@ namespace Offline {
                         tcell.isTarget = true;
                         for (int j = 0; j <= i; j++)
                             tcell.usedDices.Add(d);
-                    }
+                    } else break;
                 }
             } else {
                 Cell tcell;
@@ -175,8 +146,7 @@ namespace Offline {
             cell.side = cell.count == 0 ? (byte)0 : cell.side;
             selectedChecker = null;
             if (!key) {
-                foreach (var d in toCell.usedDices)
-                    dices.Remove(d);
+                Dice.UseDices(toCell.usedDices);
                 
                 isFromHead = (cell.id == 1 && !iswfirst) || (cell.id == 13 && !isbfirst);
             }
