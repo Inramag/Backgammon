@@ -14,14 +14,12 @@ namespace Offline {
         [SerializeField] GameObject endmenu;
         [SerializeField] TextMeshProUGUI endlbl;
 
-        [SerializeField] Dice diceSprites;
-        [SerializeField] Image dice1, dice2;
-
         [SerializeField] GameObject b_checker, w_checker;
 
         public Home homeb, homew;
+        [SerializeField] Transform p1, p2;
 
-        readonly Cell[] cells = new Cell[24];
+        public readonly Cell[] cells = new Cell[24];
 
         public bool isMoving;
         public Cell fromCell, toCell;
@@ -68,13 +66,23 @@ namespace Offline {
 
             yield return StartCoroutine(Dice.instance.Roll());
 
+            var p = (iswturn ? p1 : p2).GetComponent<TextMeshProUGUI>();
+            var ar = p.transform.GetChild(0).gameObject;
+
+            p.color = new Color(1, 1, 1, 1);
+            ar.SetActive(true);
+
             blocker.raycastTarget = false;
             while (!isturncompl) yield return null;
             blocker.raycastTarget = true;
+            
+            p.color = new Color(0.6f, 0.6f, 0.6f, 1);
+            ar.SetActive(false);
 
             isturncompl = false;
-            iswturn = !iswturn;
             isFromHead = false;
+
+            iswturn = !iswturn;
         }
         
         public IEnumerator StartMoveChecker(Cell cell) {
@@ -99,7 +107,7 @@ namespace Offline {
 
                     var tcell = cells[targ % 24];
 
-                    if (tcell.CanAdd(cell.side)) {
+                    if (tcell.CanAdd(cell)) {
                         tcell.isTarget = true;
                         for (int j = 0; j <= i; j++)
                             tcell.usedDices.Add(d);
@@ -113,7 +121,7 @@ namespace Offline {
                     if (iswturn ? (targ > 23) : (cell.id < 12 && targ > 11)) continue;
 
                     tcell = cells[targ % 24];
-                    if (tcell.CanAdd(cell.side)) {
+                    if (tcell.CanAdd(cell)) {
                         tcell.isTarget = true;
                         tcell.usedDices.Add(d);
                         avail++;
@@ -121,10 +129,12 @@ namespace Offline {
                 }
 
                 if (dices.Count == 2) {
-                    var sum = cell.id + dices.Sum() - 1;
-                    tcell = cells[sum % 24];
+                    var sum = cell.id - 1 + dices.Sum();
+                    if (sum > 23) sum -= 24;
+
+                    tcell = cells[sum];
                     if (avail != 0 && !(iswturn ? (sum > 23) : (cell.id < 12 && sum > 11))) {
-                        if (tcell.CanAdd(cell.side)) {
+                        if (tcell.CanAdd(cell)) {
                             tcell.isTarget = true;
                             tcell.usedDices.AddRange(dices);
                         }

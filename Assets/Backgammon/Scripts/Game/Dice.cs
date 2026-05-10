@@ -51,6 +51,7 @@ public class Dice : MonoBehaviour {
                 do1.sprite = this[ds1[i]];
                 do2.sprite = this[ds2[i]];
             }
+            yield return new WaitForSeconds(0.8f);
         }
 
         isDouble = ds1.Last() == ds2.Last();
@@ -73,10 +74,10 @@ public class Dice : MonoBehaviour {
     }
 
     void FixDices() {
-        if (dices.Count == 0) {
-            _dices.gameObject.SetActive(false);
-        } else {
-            _dices.gameObject.SetActive(true);
+        var isempty = dices.Count == 0;
+        _dices.gameObject.SetActive(!isempty);
+
+        if (!isempty) {
             if (isDouble) {
                 _dices.GetChild(0).gameObject.SetActive(false);
                 var d = _dices.GetChild(1).GetComponent<RectTransform>();
@@ -85,6 +86,7 @@ public class Dice : MonoBehaviour {
                 l.gameObject.SetActive(true);
                 l.GetChild(1).GetComponent<TextMeshProUGUI>().text = $"{dices.Count}";
                 d.localPosition = new Vector3(-80, -60, 0);
+                d.GetComponent<Image>().sprite = this[dices[0]];
             } else {
                 _dices.GetChild(2).gameObject.SetActive(false);
                 var d1 = _dices.GetChild(1).GetComponent<RectTransform>();
@@ -102,7 +104,7 @@ public class Dice : MonoBehaviour {
         }
     }
 
-    [RuntimeInitializeOnLoadMethod] static void Init() {
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)] static void Init() {
         Sprite load(string n) => Addressables.LoadAssetAsync<Sprite>($"game[dice-{n}]").WaitForCompletion();
         for (int i = 0; i < 6;) _sprites[i] = load((++i).ToString());
     }

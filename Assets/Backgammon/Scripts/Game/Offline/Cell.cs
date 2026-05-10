@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 namespace Offline {
@@ -10,7 +9,7 @@ namespace Offline {
         [SerializeField] bool isrev;
         int _mcount = 6;
 
-        [SerializeField] GameObject _targetImage; // Ссылка на стрелку в инспекторе
+        [SerializeField] GameObject _targetImage;
         public bool _isTarget;
         public bool isTarget 
         {
@@ -24,20 +23,54 @@ namespace Offline {
 
         [SerializeField] int _id;
         public int id => _id;
-        public byte side = 0; // 0 - empty, 1 - black, 2 - white
+        public byte side = 0;
         public List<GameObject> checkers = new ();
         public byte count => (byte)checkers.Count;
 
         public Action<Cell> onClick;
 
-        public bool CanAdd(byte s) => side == 0 || side == s;
+        public bool CanAdd(Cell c2) {
+            var b1 = side == 0 || side == c2.side;
+
+            var c = 1;
+            Debug.Log($"Checking cell {_id}");
+            for (int i = _id; c < 6;) {
+                Debug.Log($"next cell {i+1}");
+                var c1 = GameManager.instance.cells[i];
+                if (c1.side == c2.side) {
+                    if (c1 == c2 && c2.count == 0) break;
+                    c++;
+                } else break;
+            
+                i = i == 23 ? 0 : i + 1;
+            }
+            
+            Debug.Log($"next count {c-1}");
+            for (int i = _id == 1 ? 23 : _id - 2; c < 6;) {
+                Debug.Log($"prev cell {i+1}");
+                var c1 = GameManager.instance.cells[i];
+                if (c1.side == c2.side) {
+                    if (c1 == c2 && c2.count == 0) break;
+                    c++;
+                } else break; 
+            
+                i = i == 0 ? 23 : i - 1;
+            }
+            Debug.Log($"count {c}");
+
+            return b1 && c < 6;
+        }
         public void Add(GameObject checker) {
             checkers.Add(checker);
-            checker.transform.SetParent(transform);
+
             var ismax = count > _mcount;
-            checker.transform.localPosition = new Vector3(
+
+            var t = checker.transform;
+            t.SetParent(transform);
+            t.localPosition = new Vector3(
                 0, (isrev ? -1 : 1) * (192 - (ismax ? _mcount : count) * 64 + 32), 0
             );
+            
             if (ismax) {
                 checkers[^2].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "";
                 checker.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = ismax ? (count-_mcount+1).ToString() : "";
