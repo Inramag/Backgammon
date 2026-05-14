@@ -1,10 +1,10 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AddressableAssets;
-using System.Linq;
 
 public class Dice : MonoBehaviour {
     public static Dice instance { get; private set; }
@@ -47,7 +47,7 @@ public class Dice : MonoBehaviour {
             var do2 = roller.transform.GetChild(1).GetComponent<Image>();
 
             for (int i = 0; i < ds1.Count; i++) {
-                yield return new WaitForSeconds(i * 0.1f);
+                yield return new WaitForSeconds(System.Math.Clamp(i, 5, 15) * 0.03f);
                 do1.sprite = this[ds1[i]];
                 do2.sprite = this[ds2[i]];
             }

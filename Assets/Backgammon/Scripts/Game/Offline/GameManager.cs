@@ -3,12 +3,12 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Offline {
     public class GameManager : MonoBehaviour {
         public static GameManager instance;
-        void Awake() => instance = this;
 
         [SerializeField] Image blocker;
         [SerializeField] GameObject endmenu;
@@ -17,7 +17,7 @@ namespace Offline {
         [SerializeField] GameObject b_checker, w_checker;
 
         public Home homeb, homew;
-        [SerializeField] Transform p1, p2;
+        [SerializeField] TextMeshProUGUI p1, p2;
 
         public readonly Cell[] cells = new Cell[24];
 
@@ -31,24 +31,52 @@ namespace Offline {
         public bool iswturn = true;
         bool isturncompl = false;
         bool isvictory = false;
-        
-        IEnumerator Start() {
+
+        void Awake() {
+            instance = this;
+
             for (int i = 0; i < 24; i++) {
                 cells[i] = transform.GetChild(i).GetComponent<Cell>();
             }
 
+            cells[11].onClick = c => { if (c.side == 1) homeb.BearOff(c); };
+            cells[23].onClick = c => { if (c.side == 2) homew.BearOff(c); };
+
+            p1.color = new(0.6f, 0.6f, 0.6f, 1);
+            p2.color = new(0.6f, 0.6f, 0.6f, 1);
+        }
+
+        IEnumerator wait(float s) { yield return new WaitForSeconds(s); }
+
+        IEnumerator Start() {
+            var c = blocker.color;
+            while (blocker.color.a > 0) {
+                c.a -= Time.deltaTime * 2;
+                blocker.color = c;
+                yield return null;
+            }
+            c.a = 0;
+            blocker.color = c;
+            blocker.raycastTarget = true;
+
+            yield return wait(0.5f);
+
             var wcell = cells[0];
             var bcell = cells[12];
+
             for (int i = 0; i < 15; i++) {
+                yield return wait(0.1f);
                 wcell.Add(Instantiate(w_checker));
+                yield return wait(0.05f);
                 bcell.Add(Instantiate(b_checker));
             }
 
-            wcell.side = 2;
-            bcell.side = 1;
+            yield return wait(1f);
 
-            cells[11].onClick = c => { if (c.side == 1) homeb.BearOff(c); };
-            cells[23].onClick = c => { if (c.side == 2) homew.BearOff(c); };
+            p1.gameObject.SetActive(true);
+            p2.gameObject.SetActive(true);
+
+            yield return wait(1f);
 
             yield return StartCoroutine(Turn());
             iswfirst = false;
@@ -57,12 +85,12 @@ namespace Offline {
 
             while (!isvictory) yield return StartCoroutine(Turn());
 
-            yield return new WaitForSeconds(1f);
+            yield return wait(1f);
             endmenu.SetActive(true);
         }
 
         IEnumerator Turn() {
-            yield return new WaitForSeconds(1f);
+            yield return wait(1f);
 
             yield return StartCoroutine(Dice.instance.Roll());
 
@@ -75,7 +103,7 @@ namespace Offline {
             blocker.raycastTarget = false;
             while (!isturncompl) yield return null;
             blocker.raycastTarget = true;
-            
+
             p.color = new Color(0.6f, 0.6f, 0.6f, 1);
             ar.SetActive(false);
 
@@ -84,7 +112,7 @@ namespace Offline {
 
             iswturn = !iswturn;
         }
-        
+
         public IEnumerator StartMoveChecker(Cell cell) {
             if (cell.id == (iswturn ? 1 : 13) && isFromHead) yield break;
 
@@ -157,7 +185,7 @@ namespace Offline {
             selectedChecker = null;
             if (!key) {
                 Dice.UseDices(toCell.usedDices);
-                
+
                 isFromHead = (cell.id == 1 && !iswfirst) || (cell.id == 13 && !isbfirst);
             }
             foreach (var c in cells) {
@@ -172,6 +200,19 @@ namespace Offline {
         public void End(string text) {
             isvictory = true;
             endlbl.text = text;
+        }
+        public IEnumerator Back() {
+            var c = blocker.color;
+            while (blocker.color.a < 1) {
+                c.a += Time.deltaTime * 4;
+                blocker.color = c;
+                yield return null;
+            }
+            c.a = 1;
+            blocker.color = c;
+
+            SceneManager.LoadScene(0);
+            StartCoroutine(MainMenu.instance.Back());
         }
     }
 }

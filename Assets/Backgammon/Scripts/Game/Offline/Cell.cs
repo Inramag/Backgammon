@@ -33,9 +33,7 @@ namespace Offline {
             var b1 = side == 0 || side == c2.side;
 
             var c = 1;
-            Debug.Log($"Checking cell {_id}");
-            for (int i = _id; c < 6;) {
-                Debug.Log($"next cell {i+1}");
+            for (int i = _id == 24 ? 0 : _id; c < 6;) {
                 var c1 = GameManager.instance.cells[i];
                 if (c1.side == c2.side) {
                     if (c1 == c2 && c2.count == 0) break;
@@ -45,9 +43,7 @@ namespace Offline {
                 i = i == 23 ? 0 : i + 1;
             }
             
-            Debug.Log($"next count {c-1}");
             for (int i = _id == 1 ? 23 : _id - 2; c < 6;) {
-                Debug.Log($"prev cell {i+1}");
                 var c1 = GameManager.instance.cells[i];
                 if (c1.side == c2.side) {
                     if (c1 == c2 && c2.count == 0) break;
@@ -56,7 +52,6 @@ namespace Offline {
             
                 i = i == 0 ? 23 : i - 1;
             }
-            Debug.Log($"count {c}");
 
             return b1 && c < 6;
         }

@@ -858,7 +858,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 0.15686275, g: 0.15686275, b: 0.15686275, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 0
@@ -3266,12 +3266,12 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1288823835}
-  - {fileID: 121130639}
-  - {fileID: 225304577}
   - {fileID: 2100922431}
   - {fileID: 538960383}
   - {fileID: 1595281469}
   - {fileID: 1961941178}
+  - {fileID: 121130639}
+  - {fileID: 225304577}
   - {fileID: 299726661}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4599,8 +4599,8 @@ MonoBehaviour:
   w_checker: {fileID: 198882431406119688, guid: 0421984709401f647892108e252d8481, type: 3}
   homeb: {fileID: 538960384}
   homew: {fileID: 2100922432}
-  p1: {fileID: 1595281469}
-  p2: {fileID: 1961941178}
+  p1: {fileID: 1595281470}
+  p2: {fileID: 1961941179}
   isMoving: 0
   fromCell: {fileID: 0}
   toCell: {fileID: 0}
@@ -5294,7 +5294,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1595281469
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6220,7 +6220,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1961941178
 RectTransform:
   m_ObjectHideFlags: 0
