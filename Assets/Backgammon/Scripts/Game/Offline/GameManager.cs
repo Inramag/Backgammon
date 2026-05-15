@@ -42,6 +42,9 @@ namespace Offline {
             cells[11].onClick = c => { if (c.side == 1) homeb.BearOff(c); };
             cells[23].onClick = c => { if (c.side == 2) homew.BearOff(c); };
 
+            cells[0].side = 2;
+            cells[12].side = 1;
+
             p1.color = new(0.6f, 0.6f, 0.6f, 1);
             p2.color = new(0.6f, 0.6f, 0.6f, 1);
         }
