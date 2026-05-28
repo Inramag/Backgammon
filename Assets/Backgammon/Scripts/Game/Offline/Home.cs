@@ -10,8 +10,9 @@ namespace Offline {
         void Awake() => rtransform = GetComponent<RectTransform>();
 
         public void BearOff(Cell cell) {
-            cell.Remove();
             var c = cell.checkers[0].transform;
+            cell.Remove();
+            
             c.SetParent(transform);
             c.localPosition = new Vector3(0, (-rtransform.rect.center.y) + count++ * 10 + 32, 0);
             CheckVictory(count, side);

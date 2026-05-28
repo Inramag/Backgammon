@@ -172,9 +172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Offline.Cell
   isrev: 0
   _targetImage: {fileID: 1537358858}
-  _isTarget: 0
-  usedDices: 
-  _id: 9
+  _id: 8
   side: 0
   checkers: []
 --- !u!222 &14425534
@@ -268,9 +266,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Offline.Cell
   isrev: 0
   _targetImage: {fileID: 2108152616}
-  _isTarget: 0
-  usedDices: 
-  _id: 7
+  _id: 6
   side: 0
   checkers: []
 --- !u!222 &58050313
@@ -646,9 +642,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Offline.Cell
   isrev: 0
   _targetImage: {fileID: 1127759731}
-  _isTarget: 0
-  usedDices: 
-  _id: 1
+  _id: 0
   side: 0
   checkers: []
 --- !u!114 &98691096
@@ -1496,9 +1490,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Offline.Cell
   isrev: 1
   _targetImage: {fileID: 234131811}
-  _isTarget: 0
-  usedDices: 
-  _id: 24
+  _id: 23
   side: 0
   checkers: []
 --- !u!222 &340461270
@@ -1667,9 +1659,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Offline.Cell
   isrev: 1
   _targetImage: {fileID: 2096556388}
-  _isTarget: 0
-  usedDices: 
-  _id: 17
+  _id: 16
   side: 0
   checkers: []
 --- !u!222 &408493427
@@ -1771,9 +1761,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Offline.Cell
   isrev: 0
   _targetImage: {fileID: 559724320}
-  _isTarget: 0
-  usedDices: 
-  _id: 2
+  _id: 1
   side: 0
   checkers: []
 --- !u!114 &468617160
@@ -2108,9 +2096,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Offline.Cell
   isrev: 1
   _targetImage: {fileID: 1930947690}
-  _isTarget: 0
-  usedDices: 
-  _id: 22
+  _id: 21
   side: 0
   checkers: []
 --- !u!222 &526925468
@@ -2175,16 +2161,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 538960382}
-  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 820408162}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -580, y: -200}
+  m_AnchoredPosition: {x: -580, y: -500}
   m_SizeDelta: {x: 100, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &538960384
@@ -2628,9 +2614,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Offline.Cell
   isrev: 1
   _targetImage: {fileID: 710322768}
-  _isTarget: 0
-  usedDices: 
-  _id: 23
+  _id: 22
   side: 0
   checkers: []
 --- !u!222 &649554365
@@ -2724,9 +2708,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Offline.Cell
   isrev: 1
   _targetImage: {fileID: 1554136213}
-  _isTarget: 0
-  usedDices: 
-  _id: 16
+  _id: 15
   side: 0
   checkers: []
 --- !u!222 &698054132
@@ -2820,9 +2802,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Offline.Cell
   isrev: 1
   _targetImage: {fileID: 298198593}
-  _isTarget: 0
-  usedDices: 
-  _id: 20
+  _id: 19
   side: 0
   checkers: []
 --- !u!222 &699598869
@@ -3136,9 +3116,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Offline.Cell
   isrev: 0
   _targetImage: {fileID: 542716063}
-  _isTarget: 0
-  usedDices: 
-  _id: 6
+  _id: 5
   side: 0
   checkers: []
 --- !u!114 &786333607
@@ -3333,9 +3311,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Offline.Cell
   isrev: 1
   _targetImage: {fileID: 497946514}
-  _isTarget: 0
-  usedDices: 
-  _id: 13
+  _id: 12
   side: 0
   checkers: []
 --- !u!222 &873538936
@@ -3429,9 +3405,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Offline.Cell
   isrev: 1
   _targetImage: {fileID: 249371139}
-  _isTarget: 0
-  usedDices: 
-  _id: 19
+  _id: 18
   side: 0
   checkers: []
 --- !u!222 &886332970
@@ -3675,9 +3649,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Offline.Cell
   isrev: 0
   _targetImage: {fileID: 1344654886}
-  _isTarget: 0
-  usedDices: 
-  _id: 12
+  _id: 11
   side: 0
   checkers: []
 --- !u!222 &949841292
@@ -3932,9 +3904,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Offline.Cell
   isrev: 0
   _targetImage: {fileID: 198533043}
-  _isTarget: 0
-  usedDices: 
-  _id: 4
+  _id: 3
   side: 0
   checkers: []
 --- !u!114 &1021635059
@@ -4020,9 +3990,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Offline.Cell
   isrev: 1
   _targetImage: {fileID: 986261504}
-  _isTarget: 0
-  usedDices: 
-  _id: 15
+  _id: 14
   side: 0
   checkers: []
 --- !u!222 &1059599238
@@ -4266,9 +4234,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Offline.Cell
   isrev: 0
   _targetImage: {fileID: 593454346}
-  _isTarget: 0
-  usedDices: 
-  _id: 11
+  _id: 10
   side: 0
   checkers: []
 --- !u!222 &1143115581
@@ -4370,9 +4336,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Offline.Cell
   isrev: 0
   _targetImage: {fileID: 1214823290}
-  _isTarget: 0
-  usedDices: 
-  _id: 3
+  _id: 2
   side: 0
   checkers: []
 --- !u!114 &1183896545
@@ -4602,9 +4566,12 @@ MonoBehaviour:
   p1: {fileID: 1595281470}
   p2: {fileID: 1961941179}
   isMoving: 0
-  fromCell: {fileID: 0}
-  toCell: {fileID: 0}
+  fcell: {fileID: 0}
+  tcell: {fileID: 0}
   selectedChecker: {fileID: 0}
+  iswfirst: 1
+  isbfirst: 1
+  isFromHead: 0
   iswturn: 1
 --- !u!1 &1344654886
 GameObject:
@@ -4871,9 +4838,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Offline.Cell
   isrev: 0
   _targetImage: {fileID: 629706150}
-  _isTarget: 0
-  usedDices: 
-  _id: 8
+  _id: 7
   side: 0
   checkers: []
 --- !u!222 &1400822031
@@ -5581,9 +5546,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Offline.Cell
   isrev: 1
   _targetImage: {fileID: 1457025508}
-  _isTarget: 0
-  usedDices: 
-  _id: 14
+  _id: 13
   side: 0
   checkers: []
 --- !u!222 &1685259801
@@ -5677,9 +5640,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Offline.Cell
   isrev: 1
   _targetImage: {fileID: 940627881}
-  _isTarget: 0
-  usedDices: 
-  _id: 21
+  _id: 20
   side: 0
   checkers: []
 --- !u!222 &1694689282
@@ -5773,9 +5734,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Offline.Cell
   isrev: 1
   _targetImage: {fileID: 1122353934}
-  _isTarget: 0
-  usedDices: 
-  _id: 18
+  _id: 17
   side: 0
   checkers: []
 --- !u!222 &1779839701
@@ -6394,9 +6353,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Offline.Cell
   isrev: 0
   _targetImage: {fileID: 916289492}
-  _isTarget: 0
-  usedDices: 
-  _id: 10
+  _id: 9
   side: 0
   checkers: []
 --- !u!222 &2032480329
@@ -6498,9 +6455,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Offline.Cell
   isrev: 0
   _targetImage: {fileID: 1792088818}
-  _isTarget: 0
-  usedDices: 
-  _id: 5
+  _id: 4
   side: 0
   checkers: []
 --- !u!114 &2047310317
@@ -6632,16 +6587,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2100922430}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 820408162}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 580, y: 200}
+  m_AnchoredPosition: {x: 580, y: 500}
   m_SizeDelta: {x: 100, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2100922432

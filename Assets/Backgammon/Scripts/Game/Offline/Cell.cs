@@ -10,16 +10,16 @@ namespace Offline {
         int _mcount = 6;
 
         [SerializeField] GameObject _targetImage;
-        public bool _isTarget;
+        private bool _ist;
         public bool isTarget 
         {
-            get => _isTarget;
+            get => _ist;
             set {
-                _isTarget = value;
+                _ist = value;
                 _targetImage.SetActive(value);
             }
         }
-        public List<int> usedDices = new(); 
+        [NonSerialized] public int[] usedDices = new int[4]; 
 
         [SerializeField] int _id;
         public int id => _id;
@@ -29,31 +29,37 @@ namespace Offline {
 
         public Action<Cell> onClick;
 
-        public bool CanAdd(Cell c2) {
-            var b1 = side == 0 || side == c2.side;
+        public bool CanAdd(Cell fc) {
+            var bs = side == 0 || side == fc.side;
+            Debug.Log($"CanAdd ({fc.id} > {id}) > side {bs}");
+            if (!bs) return false;
 
             var c = 1;
-            for (int i = _id == 24 ? 0 : _id; c < 6;) {
-                var c1 = GameManager.instance.cells[i];
-                if (c1.side == c2.side) {
-                    if (c1 == c2 && c2.count == 0) break;
-                    c++;
-                } else break;
-            
+            for (int i = _id; c < 6;) {
                 i = i == 23 ? 0 : i + 1;
+                Debug.Log($"CanAdd > + id {i}");
+
+                var cell = GameManager.instance.cells[i];
+                var b = cell.side == fc.side;
+                Debug.Log($"side {b}");
+                
+                if (!b || (cell == fc && fc.count == 0)) break;
+                c++;
             }
             
-            for (int i = _id == 1 ? 23 : _id - 2; c < 6;) {
-                var c1 = GameManager.instance.cells[i];
-                if (c1.side == c2.side) {
-                    if (c1 == c2 && c2.count == 0) break;
-                    c++;
-                } else break; 
-            
+            for (int i = _id; c < 6;) {
                 i = i == 0 ? 23 : i - 1;
+                Debug.Log($"CanAdd > - id {i}");
+
+                var cell = GameManager.instance.cells[i];
+                var b = cell.side == fc.side;
+                Debug.Log($"side {b}");
+                
+                if (!b || (cell == fc && fc.count == 0)) break;
+                c++;
             }
 
-            return b1 && c < 6;
+            return c < 6;
         }
         public void Add(GameObject checker) {
             checkers.Add(checker);
@@ -68,7 +74,7 @@ namespace Offline {
             
             if (ismax) {
                 checkers[^2].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "";
-                checker.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = ismax ? (count-_mcount+1).ToString() : "";
+                checker.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = (count-_mcount+1).ToString();
             }
         }
         public void Remove() {
@@ -91,16 +97,18 @@ namespace Offline {
         }
         public void OnPointerClick(PointerEventData _) {
             if (GameManager.instance.isMoving) {
-                if (GameManager.instance.fromCell == this) return;  
-
-                var s = GameManager.instance.fromCell.side;          
+                if (GameManager.instance.fcell == this) return;
                 if (!isTarget) return;
-                GameManager.instance.toCell = this;
                 Add(GameManager.instance.selectedChecker);
+                GameManager.instance.tcell = this;
                 GameManager.instance.isMoving = false;
-                side = s;
+                side = GameManager.instance.fcell.side;
                 onClick?.Invoke(this);
-            } else if (count != 0 && side == (GameManager.instance.iswturn ? 2 : 1)) StartCoroutine(GameManager.instance.StartMoveChecker(this));
+            } else if (
+                count != 0 &&
+                side == (GameManager.instance.iswturn ? 2 : 1) &&
+                !(id == (side == 2 ? 0 : 12) && GameManager.instance.isFromHead))
+                StartCoroutine(GameManager.instance.StartMove(this));
         }
 
         public static bool operator ==(Cell a, Cell b) => a.id == b.id;

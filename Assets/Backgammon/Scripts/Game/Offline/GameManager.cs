@@ -22,15 +22,18 @@ namespace Offline {
         public readonly Cell[] cells = new Cell[24];
 
         public bool isMoving;
-        public Cell fromCell, toCell;
+        public Cell fcell, tcell;
         public GameObject selectedChecker;
 
-        bool iswfirst = true, isbfirst = true;
-        bool isFromHead = false;
+        public bool iswfirst = true, isbfirst = true;
+        public bool isFromHead = false;
 
         public bool iswturn = true;
         bool isturncompl = false;
         bool isvictory = false;
+
+        // active player color / inactive player color
+        readonly Color actpcolor = new(1, 1, 1), inactpcolor = new(0.6f, 0.6f, 0.6f);
 
         void Awake() {
             instance = this;
@@ -45,8 +48,8 @@ namespace Offline {
             cells[0].side = 2;
             cells[12].side = 1;
 
-            p1.color = new(0.6f, 0.6f, 0.6f, 1);
-            p2.color = new(0.6f, 0.6f, 0.6f, 1);
+            p1.color = inactpcolor;
+            p2.color = inactpcolor;
         }
 
         IEnumerator wait(float s) { yield return new WaitForSeconds(s); }
@@ -93,111 +96,133 @@ namespace Offline {
         }
 
         IEnumerator Turn() {
-            yield return wait(1f);
-
+            yield return wait(0.5f);
             yield return StartCoroutine(Dice.instance.Roll());
-
-            var p = (iswturn ? p1 : p2).GetComponent<TextMeshProUGUI>();
+            if (!CanMove()) yield break;
+            
+            var p = iswturn ? p1 : p2;
             var ar = p.transform.GetChild(0).gameObject;
 
-            p.color = new Color(1, 1, 1, 1);
+            p.color = actpcolor;
             ar.SetActive(true);
-
             blocker.raycastTarget = false;
-            while (!isturncompl) yield return null;
-            blocker.raycastTarget = true;
 
-            p.color = new Color(0.6f, 0.6f, 0.6f, 1);
+            while(!isturncompl) yield return null;
+
+            blocker.raycastTarget = true;
+            p.color = inactpcolor;
             ar.SetActive(false);
 
             isturncompl = false;
             isFromHead = false;
-
             iswturn = !iswturn;
         }
 
-        public IEnumerator StartMoveChecker(Cell cell) {
-            if (cell.id == (iswturn ? 1 : 13) && isFromHead) yield break;
+        public IEnumerator StartMove(Cell cell) {
+            if (cell.id == (iswturn ? 0 : 12) && isFromHead) yield break;
 
             isMoving = true;
-            fromCell = cell;
-            selectedChecker = cell.checkers[^1];
-            cell.Remove();
+            fcell = cell;
+            selectedChecker = fcell.checkers[^1];
+            fcell.Remove();
 
             var dices = Dice.dices;
 
             if (Dice.isDouble) {
-                int sum = 0;
+                var sum = 0;
                 var d = dices[0];
 
                 for (int i = 0; i < dices.Count; i++) {
                     sum += d;
-                    var targ = cell.id + sum - 1;
+                    if(!CanMove(fcell, sum, out var tc)) break;
 
-                    if (iswturn ? (targ > 23) : (cell.id < 12 && targ > 11)) break;
-
-                    var tcell = cells[targ % 24];
-
-                    if (tcell.CanAdd(cell)) {
-                        tcell.isTarget = true;
-                        for (int j = 0; j <= i; j++)
-                            tcell.usedDices.Add(d);
-                    } else break;
+                    tc.isTarget = true;
+                    for (int j = 0; j <= i; j++)
+                        tc.usedDices[j] = d;
                 }
             } else {
-                Cell tcell;
-                int avail = 0;
-                foreach (var d in dices) {
-                    var targ = cell.id + d - 1;
-                    if (iswturn ? (targ > 23) : (cell.id < 12 && targ > 11)) continue;
-
-                    tcell = cells[targ % 24];
-                    if (tcell.CanAdd(cell)) {
-                        tcell.isTarget = true;
-                        tcell.usedDices.Add(d);
-                        avail++;
+                Cell tc;
+                var av = 0;
+                foreach(var d in dices) {
+                    if (CanMove(fcell, d, out tc)) {
+                        av++;
+                        tc.isTarget = true;
+                        tc.usedDices[0] = d;
                     }
                 }
 
-                if (dices.Count == 2) {
-                    var sum = cell.id - 1 + dices.Sum();
-                    if (sum > 23) sum -= 24;
-
-                    tcell = cells[sum];
-                    if (avail != 0 && !(iswturn ? (sum > 23) : (cell.id < 12 && sum > 11))) {
-                        if (tcell.CanAdd(cell)) {
-                            tcell.isTarget = true;
-                            tcell.usedDices.AddRange(dices);
-                        }
+                if (av > 0) {
+                    if (CanMove(fcell, dices.Sum(), out tc)) {
+                        tc.isTarget = true;
+                        tc.usedDices = dices.ToArray();
                     }
                 }
             }
 
-            bool key = false;
-            while (isMoving) {
-                key = Keyboard.current.escapeKey.wasPressedThisFrame;
-                if (key) {
+            var iskey = false;
+            while(isMoving) {
+                iskey = Keyboard.current.escapeKey.wasPressedThisFrame;
+                if (iskey) {
                     isMoving = false;
-                    cell.Add(selectedChecker);
+                    fcell.Add(selectedChecker);
                     break;
                 }
+
                 selectedChecker.transform.position = Cell.targpos;
                 yield return null;
             }
-            cell.side = cell.count == 0 ? (byte)0 : cell.side;
             selectedChecker = null;
-            if (!key) {
-                Dice.UseDices(toCell.usedDices);
 
-                isFromHead = (cell.id == 1 && !iswfirst) || (cell.id == 13 && !isbfirst);
+            if (fcell.count == 0) fcell.side = 0;
+            if (!iskey) {
+                Dice.UseDices(tcell.usedDices);
+                
+                if (!(iswturn ? iswfirst : isbfirst)) isFromHead = fcell.id == (iswturn ? 0 : 12);
             }
-            foreach (var c in cells) {
+
+            foreach(var c in cells.Where(c => c.isTarget)) {
                 c.isTarget = false;
-                c.usedDices.Clear();
+                c.usedDices = new int[4];
             }
-            fromCell = null;
-            toCell = null;
-            if (dices.Count == 0) isturncompl = true;
+
+            fcell = null;
+            tcell = null;
+
+            if (Dice.dices.Count == 0) isturncompl = true;
+        }
+
+        bool CanMove() {
+            foreach(var c in cells.Where(c => c.side == (iswturn ? 2 : 1))) {
+                var b = CanMove(c);
+                Debug.Log($"Can Move () > id {c.id}, {b}");
+                if (b) return true;
+            }
+            return false;
+        }
+        bool CanMove(Cell c) {
+            foreach(var d in Dice.dices) {
+                var b = CanMove(c, d);
+                Debug.Log($"Can Move (Cell) > dice {d}, {b}");
+                if (b) return true;
+            }
+            return false;
+        }
+        bool CanMove(Cell c, int d) {
+            var t = c.id + d;
+            var b1 = iswturn ? (t > 23) : (c.id < 12 && t > 11);
+            t %= 24;
+            Debug.Log($"Can Move (Cell, dice) > {iswturn} ? ({t} > 23) : ({c.id} < 12 && {t} > 11)");
+            Debug.Log($"Can Move (Cell, dice) > targ {t}, index test {b1}");
+            if (b1) return false;
+            return cells[t].CanAdd(c);
+        }
+        bool CanMove(Cell c, int d, out Cell tc) {
+            tc = null;
+            var t = c.id + d;
+            if (iswturn ? (t > 23) : (c.id < 12 && t > 11)) return false;
+            t %= 24;
+            tc = cells[t];
+            return tc.CanAdd(c);
         }
 
         public void End(string text) {

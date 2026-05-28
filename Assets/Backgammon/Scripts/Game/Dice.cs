@@ -66,9 +66,10 @@ public class Dice : MonoBehaviour {
         FixDices();
     }
 
-    public static void UseDices(List<int> n) {
-        foreach (var dice in n) {
-            dices.Remove(dice);
+    public static void UseDices(int[] n) {
+        foreach (var d in n) {
+            if (d == 0) break;
+            dices.Remove(d);
         }
         instance.FixDices();
     }
