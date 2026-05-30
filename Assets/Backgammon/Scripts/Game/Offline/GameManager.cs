@@ -11,6 +11,7 @@ namespace Offline {
         public static GameManager instance;
 
         [SerializeField] Image blocker;
+        [SerializeField] GameObject exitmenu;
         [SerializeField] GameObject endmenu;
         [SerializeField] TextMeshProUGUI endlbl;
 
@@ -52,6 +53,13 @@ namespace Offline {
             p2.color = inactpcolor;
         }
 
+        void Update() {
+            if (!isMoving && Keyboard.current.escapeKey.wasPressedThisFrame) {
+                exitmenu.SetActive(true);
+                enabled = false;
+            }
+        }
+
         IEnumerator wait(float s) { yield return new WaitForSeconds(s); }
 
         IEnumerator Start() {
@@ -63,7 +71,6 @@ namespace Offline {
             }
             c.a = 0;
             blocker.color = c;
-            blocker.raycastTarget = true;
 
             yield return wait(0.5f);
 
@@ -228,19 +235,6 @@ namespace Offline {
         public void End(string text) {
             isvictory = true;
             endlbl.text = text;
-        }
-        public IEnumerator Back() {
-            var c = blocker.color;
-            while (blocker.color.a < 1) {
-                c.a += Time.deltaTime * 4;
-                blocker.color = c;
-                yield return null;
-            }
-            c.a = 1;
-            blocker.color = c;
-
-            SceneManager.LoadScene(0);
-            StartCoroutine(MainMenu.instance.Back());
         }
     }
 }
