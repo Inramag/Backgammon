@@ -11,8 +11,8 @@ public class MainMenu : MonoBehaviour {
 
     [SerializeField] Image blocker;
 
-    public void StartGame(int mode) => StartCoroutine(_StartGame(mode));
-    IEnumerator _StartGame(int mode) {
+    public void StartGame() => StartCoroutine(_StartGame());
+    IEnumerator _StartGame() {
         blocker.raycastTarget = true;
 
         var c = blocker.color;
@@ -24,9 +24,9 @@ public class MainMenu : MonoBehaviour {
         c.a = 1;
         blocker.color = c;
 
-        SceneManager.LoadScene(mode);
+        SceneManager.LoadScene(1);
     }
-
+    public void Exit() => Application.Quit();
     public IEnumerator Back() {
         var c = blocker.color;
         while (blocker.color.a > 0) {
