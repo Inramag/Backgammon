@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-3424266416998252171
+--- !u!114 &-7916708702744827789
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -52,14 +52,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 15003, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: Windows
+  m_Name: Web
   m_EditorClassIdentifier: UnityEditor.dll::UnityEditor.Build.Profile.BuildProfile
   m_AssetVersion: 1
-  m_BuildTarget: 19
-  m_Subtarget: 2
-  m_PlatformId: 4e3c793746204150860bf175a9a41a05
+  m_BuildTarget: 20
+  m_Subtarget: 0
+  m_PlatformId: 84a3bb9e7420477f885e98145999eb20
   m_PlatformBuildProfile:
-    rid: 5074369681588486147
+    rid: 5074370018334998569
   m_OverrideGlobalSceneList: 0
   m_Scenes: []
   m_HasScriptingDefines: 0
@@ -121,7 +121,7 @@ MonoBehaviour:
     - line: '|   mipStripping: 0'
     - line: '|   numberOfMipsStripped: 0'
     - line: '|   numberOfMipsStrippedPerMipmapLimitGroup: {}'
-    - line: '|   m_StackTraceTypes: 020000000100000001000000010000000100000001000000'
+    - line: '|   m_StackTraceTypes: 010000000100000001000000010000000100000001000000'
     - line: '|   iosShowActivityIndicatorOnLoading: -1'
     - line: '|   androidShowActivityIndicatorOnLoading: -1'
     - line: '|   iosUseCustomAppBackgroundBehavior: 0'
@@ -162,7 +162,7 @@ MonoBehaviour:
     - line: '|   bakeCollisionMeshes: 0'
     - line: '|   forceSingleInstance: 0'
     - line: '|   useFlipModelSwapchain: 1'
-    - line: '|   resizableWindow: 1'
+    - line: '|   resizableWindow: 0'
     - line: '|   useMacAppStoreValidation: 0'
     - line: '|   macAppStoreCategory: public.app-category.games'
     - line: '|   gpuSkinning: 0'
@@ -174,7 +174,7 @@ MonoBehaviour:
     - line: '|   xboxEnableFitness: 0'
     - line: '|   visibleInBackground: 1'
     - line: '|   allowFullscreenSwitch: 1'
-    - line: '|   fullscreenMode: 2'
+    - line: '|   fullscreenMode: 1'
     - line: '|   xboxSpeechDB: 0'
     - line: '|   xboxEnableHeadOrientation: 0'
     - line: '|   xboxEnableGuest: 0'
@@ -361,50 +361,7 @@ MonoBehaviour:
     - line: '|   AndroidAppBundleSizeToValidate: 150'
     - line: '|   AndroidReportGooglePlayAppDependencies: 1'
     - line: '|   androidSymbolsSizeThreshold: 800'
-    - line: '|   m_BuildTargetIcons:'
-    - line: '|   - m_BuildTarget: Standalone'
-    - line: '|     m_Icons:'
-    - line: '|     - serializedVersion: 2'
-    - line: '|       m_Icon: {instanceID: 0}'
-    - line: '|       m_Width: 1024'
-    - line: '|       m_Height: 1024'
-    - line: '|       m_Kind: 0'
-    - line: '|     - serializedVersion: 2'
-    - line: '|       m_Icon: {instanceID: 0}'
-    - line: '|       m_Width: 512'
-    - line: '|       m_Height: 512'
-    - line: '|       m_Kind: 0'
-    - line: '|     - serializedVersion: 2'
-    - line: '|       m_Icon: {instanceID: 0}'
-    - line: '|       m_Width: 256'
-    - line: '|       m_Height: 256'
-    - line: '|       m_Kind: 0'
-    - line: '|     - serializedVersion: 2'
-    - line: '|       m_Icon: {fileID: 2800000, guid: 2a091eddc910442469304934ebd45c8a,
-        type: 3}'
-    - line: '|       m_Width: 128'
-    - line: '|       m_Height: 128'
-    - line: '|       m_Kind: 0'
-    - line: '|     - serializedVersion: 2'
-    - line: '|       m_Icon: {instanceID: 0}'
-    - line: '|       m_Width: 64'
-    - line: '|       m_Height: 64'
-    - line: '|       m_Kind: 0'
-    - line: '|     - serializedVersion: 2'
-    - line: '|       m_Icon: {instanceID: 0}'
-    - line: '|       m_Width: 48'
-    - line: '|       m_Height: 48'
-    - line: '|       m_Kind: 0'
-    - line: '|     - serializedVersion: 2'
-    - line: '|       m_Icon: {instanceID: 0}'
-    - line: '|       m_Width: 32'
-    - line: '|       m_Height: 32'
-    - line: '|       m_Kind: 0'
-    - line: '|     - serializedVersion: 2'
-    - line: '|       m_Icon: {instanceID: 0}'
-    - line: '|       m_Width: 16'
-    - line: '|       m_Height: 16'
-    - line: '|       m_Kind: 0'
+    - line: '|   m_BuildTargetIcons: []'
     - line: '|   m_BuildTargetPlatformIcons: []'
     - line: '|   m_BuildTargetBatching: []'
     - line: '|   m_BuildTargetShaderSettings: []'
@@ -417,23 +374,27 @@ MonoBehaviour:
     - line: '|   openGLRequireES31: 0'
     - line: '|   openGLRequireES31AEP: 0'
     - line: '|   openGLRequireES32: 0'
-    - line: '|   m_TemplateCustomTags: {}'
+    - line: '|   m_TemplateCustomTags:'
+    - line: '|     PRODUCT_DESCRIPTION: '
     - line: '|   mobileMTRendering:'
     - line: '|     Android: 1'
     - line: '|     iPhone: 1'
     - line: '|     tvOS: 1'
     - line: '|   m_BuildTargetGroupLightmapEncodingQuality:'
     - line: '|   - serializedVersion: 2'
-    - line: '|     m_BuildTarget: Standalone'
+    - line: '|     m_BuildTarget: WebGL'
     - line: '|     m_EncodingQuality: 0'
     - line: '|   m_BuildTargetGroupHDRCubemapEncodingQuality:'
     - line: '|   - serializedVersion: 2'
-    - line: '|     m_BuildTarget: Standalone'
+    - line: '|     m_BuildTarget: WebGL'
     - line: '|     m_EncodingQuality: 0'
     - line: '|   m_BuildTargetGroupLightmapSettings: []'
     - line: '|   m_BuildTargetGroupLoadStoreDebugModeSettings: []'
     - line: '|   m_BuildTargetNormalMapEncoding: []'
-    - line: '|   m_BuildTargetDefaultTextureCompressionFormat: []'
+    - line: '|   m_BuildTargetDefaultTextureCompressionFormat:'
+    - line: '|   - serializedVersion: 3'
+    - line: '|     m_BuildTarget: WebGL'
+    - line: '|     m_Formats: 05000000'
     - line: '|   playModeTestRunnerEnabled: 0'
     - line: '|   runPlayModeTestAsEditModeTest: 0'
     - line: '|   actionOnDotNetUnhandledException: 1'
@@ -694,21 +655,23 @@ MonoBehaviour:
     - line: '|   webGLMemoryGeometricGrowthStep: 0.2'
     - line: '|   webGLMemoryGeometricGrowthCap: 96'
     - line: '|   webGLPowerPreference: 2'
-    - line: '|   webGLWebAssemblyTable: 0'
-    - line: '|   webGLWebAssemblyBigInt: 0'
+    - line: '|   webGLWebAssemblyTable: 1'
+    - line: '|   webGLWebAssemblyBigInt: 1'
     - line: '|   webGLCloseOnQuit: 0'
-    - line: '|   webWasm2023: 0'
+    - line: '|   webWasm2023: 1'
     - line: '|   webEnableSubmoduleStrippingCompatibility: 0'
     - line: '|   scriptingDefineSymbols: {}'
     - line: '|   additionalCompilerArguments: {}'
     - line: '|   platformArchitecture: {}'
     - line: '|   scriptingBackend:'
     - line: '|     Android: 1'
-    - line: '|   il2cppCompilerConfiguration: {}'
-    - line: '|   il2cppCodeGeneration: {}'
+    - line: '|   il2cppCompilerConfiguration:'
+    - line: '|     WebGL: 0'
+    - line: '|   il2cppCodeGeneration:'
+    - line: '|     WebGL: 1'
     - line: '|   il2cppStacktraceInformation: {}'
     - line: '|   managedStrippingLevel:'
-    - line: '|     Standalone: 3'
+    - line: '|     WebGL: 3'
     - line: '|   incrementalIl2cppBuild: {}'
     - line: '|   suppressCommonWarnings: 1'
     - line: '|   allowUnsafeCode: 0'
@@ -821,8 +784,8 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 5074369681588486147
-      type: {class: WindowsPlatformSettings, ns: UnityEditor.WindowsStandalone, asm: UnityEditor.WindowsStandalone.Extensions}
+    - rid: 5074370018334998569
+      type: {class: WebGLPlatformSettings, ns: UnityEditor.WebGL, asm: UnityEditor.WebGL.Extensions}
       data:
         m_Development: 0
         m_ConnectProfiler: 0
@@ -833,14 +796,12 @@ MonoBehaviour:
         m_ExplicitNullChecks: 0
         m_ExplicitDivideByZeroChecks: 0
         m_ExplicitArrayBoundsChecks: 0
-        m_CompressionType: 3
+        m_CompressionType: -1
         m_InstallInBuildFolder: 0
         m_InsightsSettingsContainer:
           m_BuildProfileEngineDiagnosticsState: 2
         m_AdaptivePerformanceEnabled: 0
-        m_WindowsBuildAndRunDeployTarget: 0
-        m_Architecture: 0
-        m_CreateSolution: 0
-        m_CopyPDBFiles: 0
-        m_WindowsDevicePortalAddress: 
-        m_WindowsDevicePortalUsername: 
+        m_CodeOptimization: 3
+        m_WebGLClientBrowserPath: 
+        m_WebGLClientBrowserType: 0
+        m_WebGLTextureSubtarget: 1
