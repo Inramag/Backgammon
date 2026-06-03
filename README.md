@@ -9,6 +9,8 @@
 
 **Backgammon** is a backgammon game developed using the Unity engine for desktop.
 
+[Play on itch.io](https://inramag.itch.io/backgammon)
+
 ---
 
 ### Match Start
@@ -53,6 +55,8 @@ When rolling doubles, the player is granted four moves instead of two.
 
 **Backgammon** — гра в нарди, розроблена на рушії Unity для десктопа.
 
+[Грати на itch.io](https://inramag.itch.io/backgammon)
+
 ---
 
 ### Початок матчу
@@ -96,6 +100,8 @@ When rolling doubles, the player is granted four moves instead of two.
 ## Русский
 
 **Backgammon** - игра в нарды, разработанная на движке Unity для десктопа.
+
+[Играть на itch.io](https://inramag.itch.io/backgammon)
 
 ---
 
