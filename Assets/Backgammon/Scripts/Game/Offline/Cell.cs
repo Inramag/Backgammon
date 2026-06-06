@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -19,7 +21,7 @@ namespace Offline {
                 _targetImage.SetActive(value);
             }
         }
-        [NonSerialized] public int[] usedDices = new int[4]; 
+        public UsedDices usedDices = new();
 
         [SerializeField] int _id;
         public int id => _id;

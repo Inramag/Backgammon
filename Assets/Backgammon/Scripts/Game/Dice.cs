@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AddressableAssets;
+using System;
 
 public class Dice : MonoBehaviour {
     public static Dice instance { get; private set; }
@@ -25,16 +26,16 @@ public class Dice : MonoBehaviour {
 
         var ds1 = new List<byte>();
         var ds2 = new List<byte>();
-        for (byte i = 1; i < Random.Range(10, 20); i++) {
+        for (byte i = 1; i < UnityEngine.Random.Range(10, 20); i++) {
             while (true) {
-                var n = (byte)Random.Range(1, 7);
+                var n = (byte)UnityEngine.Random.Range(1, 7);
                 if (ds1.Count == 0 || n != ds1[^1]) {
                     ds1.Add(n);
                     break;
                 }
             }
             while (true) {
-                var n = (byte)Random.Range(1, 7);
+                var n = (byte)UnityEngine.Random.Range(1, 7);
                 if (ds2.Count == 0 || n != ds2[^1]) {
                     ds2.Add(n);
                     break;
@@ -66,7 +67,7 @@ public class Dice : MonoBehaviour {
         FixDices();
     }
 
-    public static void UseDices(int[] n) {
+    public static void UseDices(UsedDices n) {
         foreach (var d in n) {
             if (d == 0) break;
             dices.Remove(d);
@@ -106,7 +107,7 @@ public class Dice : MonoBehaviour {
     }
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)] static void Init() {
-        Sprite load(string n) => Addressables.LoadAssetAsync<Sprite>($"game[dice-{n}]").WaitForCompletion();
+        static Sprite load(string n) => Addressables.LoadAssetAsync<Sprite>($"game[dice-{n}]").WaitForCompletion();
         for (int i = 0; i < 6;) _sprites[i] = load((++i).ToString());
     }
     [SerializeField] static Sprite[] _sprites = new Sprite[6];
@@ -116,4 +117,27 @@ public class Dice : MonoBehaviour {
             return _sprites[i - 1];
         }
     }
+}
+
+public class UsedDices : IEnumerable<int> {
+    readonly int[] _dices = new int[4];
+            
+    public int this[int i] {
+        get => _dices[i];
+        set => _dices[i] = value;
+    }
+
+    public void Set(IEnumerable<int> dices) {
+        int i = 0;
+        foreach (var d in dices)
+            _dices[i++] = d;
+    }
+    public void Set(int d, int c) {
+        for (int i = 0; i < c; i++)
+            _dices[i] = d;
+    }
+    public void Clear() => Array.Clear(_dices, 0, 4);
+
+    public IEnumerator<int> GetEnumerator() => ((IEnumerable<int>)_dices).GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }

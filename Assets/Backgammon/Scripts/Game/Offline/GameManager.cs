@@ -133,6 +133,13 @@ namespace Offline {
             selectedChecker = fcell.checkers[^1];
             fcell.Remove();
 
+            void checktarg(Cell c, int d, out Cell t) {
+                if (CanMove(c, d, out t)) {
+                    t.isTarget = true;
+                    t.usedDices[0] = d;
+                }
+            }
+
             var dices = Dice.dices;
 
             if (Dice.isDouble) {
@@ -144,8 +151,7 @@ namespace Offline {
                     if(!CanMove(fcell, sum, out var tc)) break;
 
                     tc.isTarget = true;
-                    for (int j = 0; j <= i; j++)
-                        tc.usedDices[j] = d;
+                    tc.usedDices.Set(d, i);
                 }
             } else {
                 Cell tc;
@@ -161,7 +167,7 @@ namespace Offline {
                 if (av > 0) {
                     if (CanMove(fcell, dices.Sum(), out tc)) {
                         tc.isTarget = true;
-                        tc.usedDices = dices.ToArray();
+                        tc.usedDices.Set(dices);
                     }
                 }
             }
@@ -189,7 +195,7 @@ namespace Offline {
 
             foreach(var c in cells.Where(c => c.isTarget)) {
                 c.isTarget = false;
-                c.usedDices = new int[4];
+                c.usedDices.Clear();
             }
 
             fcell = null;
