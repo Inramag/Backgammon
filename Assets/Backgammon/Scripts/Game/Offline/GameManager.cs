@@ -177,7 +177,8 @@ namespace Offline {
             if (!iskey) {
                 Dice.UseDices(tcell.usedDices);
                 
-                if (!(iswturn ? iswfirst : isbfirst)) isFromHead = fcell.id == (iswturn ? 0 : 12);
+                isFromHead = (iswturn ? iswfirst : isbfirst) && (fcell.id == (iswturn ? 0 : 12)) ?
+                    (Dice.isDouble ? fcell.count < 14 : true) : true;
             }
 
             foreach(var c in cells.Where(c => c.isTarget)) {
