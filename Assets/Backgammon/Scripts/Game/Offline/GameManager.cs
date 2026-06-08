@@ -133,11 +133,12 @@ namespace Offline {
             selectedChecker = fcell.checkers[^1];
             fcell.Remove();
 
-            void checktarg(Cell c, int d, out Cell t) {
-                if (CanMove(c, d, out t)) {
+            bool checktarg(Cell c, out Cell t, params int[] d) {
+                if (CanMove(c, d.Sum(), out t) is var b && b) {
                     t.isTarget = true;
-                    t.usedDices[0] = d;
+                    t.usedDices.Set(d);
                 }
+                return b;
             }
 
             var dices = Dice.dices;
@@ -148,28 +149,14 @@ namespace Offline {
 
                 for (int i = 0; i < dices.Count; i++) {
                     sum += d;
-                    if(!CanMove(fcell, sum, out var tc)) break;
-
-                    tc.isTarget = true;
-                    tc.usedDices.Set(d, i);
+                    if(checktarg(fcell, out var tc, sum)) tc.usedDices.Set(d, i);
                 }
             } else {
                 Cell tc;
                 var av = 0;
-                foreach(var d in dices) {
-                    if (CanMove(fcell, d, out tc)) {
-                        av++;
-                        tc.isTarget = true;
-                        tc.usedDices[0] = d;
-                    }
-                }
-
-                if (av > 0) {
-                    if (CanMove(fcell, dices.Sum(), out tc)) {
-                        tc.isTarget = true;
-                        tc.usedDices.Set(dices);
-                    }
-                }
+                foreach(var d in dices)
+                    if (checktarg(fcell, out tc, d)) av++;
+                if (av > 0) checktarg(fcell, out tc, dices[0], dices[1]);
             }
 
             var iskey = false;
