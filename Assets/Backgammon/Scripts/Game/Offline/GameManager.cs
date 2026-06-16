@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Linq;
+using Extensions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -23,8 +24,9 @@ namespace Offline {
         public readonly Cell[] cells = new Cell[24];
 
         public bool isMoving;
-        public Cell fcell, tcell;
-        public GameObject selectedChecker;
+        public Cell fcell;
+        public MoveTarget tcell;
+        public Transform selectedChecker;
 
         public bool iswfirst = true, isbfirst = true;
         public bool isFromHead = false;
@@ -43,20 +45,16 @@ namespace Offline {
                 cells[i] = transform.GetChild(i).GetComponent<Cell>();
             }
 
-            cells[11].onClick = c => { if (c.side == 1) homeb.BearOff(c); };
-            cells[23].onClick = c => { if (c.side == 2) homew.BearOff(c); };
-
-            cells[0].side = 2;
-            cells[12].side = 1;
-
             p1.color = inactpcolor;
             p2.color = inactpcolor;
         }
 
         void Update() {
-            if (!isMoving && Keyboard.current.escapeKey.wasPressedThisFrame) {
-                exitmenu.SetActive(true);
-                enabled = false;
+            if (!endmenu.activeSelf && !isvictory && !isMoving && Keyboard.current.escapeKey.wasPressedThisFrame) {
+                var isactive = !exitmenu.activeSelf;
+                exitmenu.SetActive(isactive);
+                blocker.raycastTarget = !isactive;
+                Time.timeScale = isactive ? 0 : 1;
             }
         }
 
@@ -74,8 +72,10 @@ namespace Offline {
 
             yield return wait(0.5f);
 
-            var wcell = cells[0];
-            var bcell = cells[12];
+            var wcell = cells[23];
+            var bcell = cells[11];
+            wcell.side = Cell.Side.White;
+            bcell.side = Cell.Side.Black;
 
             for (int i = 0; i < 15; i++) {
                 yield return wait(0.1f);
@@ -100,6 +100,7 @@ namespace Offline {
 
             yield return wait(1f);
             endmenu.SetActive(true);
+            blocker.raycastTarget = false;
         }
 
         IEnumerator Turn() {
@@ -126,37 +127,85 @@ namespace Offline {
         }
 
         public IEnumerator StartMove(Cell cell) {
-            if (cell.id == (iswturn ? 0 : 12) && isFromHead) yield break;
-
             isMoving = true;
             fcell = cell;
-            selectedChecker = fcell.checkers[^1];
-            fcell.Remove();
+            selectedChecker = fcell.Take();
+
+            var dices = Dice.dices.Where(d => d != 0).ToArray();
+
+            var home = iswturn ? homew : homeb;
+            {
+                var hcells = new Vector2Int(iswturn ? 18 : 6, iswturn ? 23 : 11);
+                var ishome = fcell.id.InRange(hcells.x, hcells.y);
+                var allhome = false;
+                if (ishome) {
+                    allhome = true;
+                    foreach(var c in cells) {
+                        if (c.side != (Cell.Side)(iswturn ? 2 : 1)) continue;
+                        if (!c.id.InRange(hcells.x, hcells.y)) {
+                            allhome = false;
+                            break;
+                        }
+                    }
+                }
+                if (allhome) {
+                    if (Dice.isDouble) {
+                        var sum = 0;
+                        for (int i = 0; i < dices.Length; i++) {
+                            sum += dices[0];
+                            if (cell.id + sum > hcells.y) {
+                                home.usedDices.Set(dices[0], i+1);
+                                home.istarget = true;
+                                break;
+                            }
+                        }
+                    } else {
+                        var dcs = new int[4];
+                        foreach (var d in dices) {
+                            if (cell.id + d > hcells.y) {
+                                dcs[0] = dcs[0] == 0 ? d : (d < dcs[0] ? d : dcs[0]);
+                            }
+                        }
+                        if (dcs[0] == 0 && dices.Length > 1) {
+                            if (cell.id + dices.Sum() > hcells.y) {
+                                dcs[0] = dices[0];
+                                dcs[1] = dices[1];
+                            }
+                        }
+                        if (dcs[0] != 0) {
+                            home.usedDices.Set(dcs);
+                            home.istarget = true;
+                        }
+                    }
+                }
+            }
 
             bool checktarg(Cell c, out Cell t, params int[] d) {
                 if (CanMove(c, d.Sum(), out t) is var b && b) {
-                    t.isTarget = true;
+                    t.istarget = true;
                     t.usedDices.Set(d);
                 }
                 return b;
             }
 
-            var dices = Dice.dices;
-
             if (Dice.isDouble) {
                 var sum = 0;
                 var d = dices[0];
 
-                for (int i = 0; i < dices.Count; i++) {
+                for (int i = 1; i <= dices.Length; i++) {
                     sum += d;
-                    if(checktarg(fcell, out var tc, sum)) tc.usedDices.Set(d, i);
+                    if(!checktarg(fcell, out var tc, sum)) break;
+                    tc.usedDices.Set(d, i);
                 }
             } else {
                 Cell tc;
                 var av = 0;
-                foreach(var d in dices)
+                foreach(var d in dices) {
                     if (checktarg(fcell, out tc, d)) av++;
-                if (av > 0) checktarg(fcell, out tc, dices[0], dices[1]);
+                }
+                if (av > 0 && dices.Length > 1) {
+                    checktarg(fcell, out tc, dices[0], dices[1]);
+                }
             }
 
             var iskey = false;
@@ -168,42 +217,73 @@ namespace Offline {
                     break;
                 }
 
-                selectedChecker.transform.position = Cell.targpos;
+                selectedChecker.transform.position = MoveTarget.targpos;
                 yield return null;
             }
             selectedChecker = null;
 
             if (fcell.count == 0) fcell.side = 0;
             if (!iskey) {
-                Dice.UseDices(tcell.usedDices);
+                tcell.usedDices.Use();
                 
                 isFromHead = (iswturn ? iswfirst : isbfirst) && (fcell.id == (iswturn ? 0 : 12)) ?
                     (Dice.isDouble ? fcell.count < 14 : true) : true;
             }
 
-            foreach(var c in cells.Where(c => c.isTarget)) {
-                c.isTarget = false;
+            foreach(var c in cells.Where(c => c.istarget)) {
+                c.istarget = false;
                 c.usedDices.Clear();
             }
+            home.istarget = false;
 
             fcell = null;
             tcell = null;
 
-            if (Dice.dices.Count == 0) isturncompl = true;
+            if (Dice.dices.All(d => d == 0)) isturncompl = true;
         }
 
         bool CanMove() {
-            foreach(var c in cells.Where(c => c.side == (iswturn ? 2 : 1))) {
+            var home = iswturn ? homew : homeb;
+            var allhome = true;
+            {
+                var hcells = new Vector2Int(iswturn ? 18 : 6, iswturn ? 23 : 11);
+                foreach(var c in cells) {
+                    if (c.side != (Cell.Side)(iswturn ? 2 : 1)) continue;
+                    if (!c.id.InRange(hcells.x, hcells.y)) {
+                        allhome = false;
+                        break;
+                    }
+                }
+            }
+
+            foreach(var c in cells.Where(c => c.side == (Cell.Side)(iswturn ? 2 : 1))) {
                 var b = CanMove(c);
                 Debug.Log($"Can Move () > id {c.id}, {b}");
                 if (b) return true;
             }
+
+            if (allhome) {
+                foreach(var c in cells.Where(c => c.side == (Cell.Side)(iswturn ? 2 : 1))) {
+                    if (!Dice.isDouble) {
+                        foreach(var d in Dice.dices) {
+                            if (d == 0) break;
+                            if (home.CanAdd(c, d)) return true;
+                        }
+                    }
+                    var sum = 0;
+                    foreach(var d in Dice.dices) {
+                        if (d == 0) break;
+                        sum += d;
+                        if (home.CanAdd(c, sum)) return true;
+                    }
+                }
+            }
+            
             return false;
         }
         bool CanMove(Cell c) {
             foreach(var d in Dice.dices) {
                 var b = CanMove(c, d);
-                Debug.Log($"Can Move (Cell) > dice {d}, {b}");
                 if (b) return true;
             }
             return false;
@@ -212,8 +292,6 @@ namespace Offline {
             var t = c.id + d;
             var b1 = iswturn ? (t > 23) : (c.id < 12 && t > 11);
             t %= 24;
-            Debug.Log($"Can Move (Cell, dice) > {iswturn} ? ({t} > 23) : ({c.id} < 12 && {t} > 11)");
-            Debug.Log($"Can Move (Cell, dice) > targ {t}, index test {b1}");
             if (b1) return false;
             return cells[t].CanAdd(c);
         }
@@ -227,8 +305,32 @@ namespace Offline {
         }
 
         public void End(string text) {
+            isturncompl = true;
             isvictory = true;
             endlbl.text = text;
+        }
+
+        public void ExitYes() {
+            StopAllCoroutines();
+            Time.timeScale = 1;
+            StartCoroutine(_ExitYes());
+        }
+        private IEnumerator _ExitYes() {
+            var c = blocker.color;
+            while (blocker.color.a < 1) {
+                c.a += Time.deltaTime * 4;
+                blocker.color = c;
+                yield return null;
+            }
+            c.a = 1;
+            blocker.color = c;
+
+            SceneManager.LoadScene(0);
+            yield return null;
+        }
+        public void ExitNo() {
+            exitmenu.SetActive(false);
+                Time.timeScale = 1;
         }
     }
 }
