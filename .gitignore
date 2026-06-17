@@ -13,4 +13,5 @@ Temp/
 UserSettings/
 Backgammon.slnx
 Assembly-CSharp.csproj
+Assembly-CSharp-Editor.csproj
 Assembly-CSharp.csproj.lscache

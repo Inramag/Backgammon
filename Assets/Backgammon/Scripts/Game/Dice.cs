@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,7 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AddressableAssets;
-using System;
+using Extensions;
 
 public class Dice : MonoBehaviour {
     public static Dice instance { get; private set; }
@@ -15,10 +16,10 @@ public class Dice : MonoBehaviour {
     [SerializeField] Image roller;
 
     public static bool isDouble { get; private set; }
-    public static readonly List<int> dices = new();
+    public static int[] dices = new int[4];
 
     public IEnumerator Roll() {
-        dices.Clear();
+        for (int i = 0; i < 4; i++) dices[i] = 0;
 
         foreach (Transform d in _dices) d.gameObject.SetActive(false);
 
@@ -48,7 +49,7 @@ public class Dice : MonoBehaviour {
             var do2 = roller.transform.GetChild(1).GetComponent<Image>();
 
             for (int i = 0; i < ds1.Count; i++) {
-                yield return new WaitForSeconds(System.Math.Clamp(i, 5, 15) * 0.03f);
+                yield return new WaitForSeconds(Math.Clamp(i, 5, 15) * 0.03f);
                 do1.sprite = this[ds1[i]];
                 do2.sprite = this[ds2[i]];
             }
@@ -57,49 +58,64 @@ public class Dice : MonoBehaviour {
 
         isDouble = ds1.Last() == ds2.Last();
         if (isDouble) {
-            for (int i = 0; i < 4; i++) dices.Add(ds1.Last());
+            for (int i = 0; i < 4; i++) dices[i] = ds1.Last();
         } else {
-            dices.Add(ds1.Last());
-            dices.Add(ds2.Last());
+            dices[0] = ds1.Last();
+            dices[1] = ds2.Last();
         }
 
         roller.gameObject.SetActive(false);
         FixDices();
     }
 
-    public static void UseDices(UsedDices n) {
-        foreach (var d in n) {
-            if (d == 0) break;
-            dices.Remove(d);
+    public static void UseDices(UsedDices used) {
+        if (dices.Eq(used.ToArray())) dices.Clear();
+        else {
+            foreach (var d in used) {
+                if (d == 0) break;
+                var i = dices.LastIndexOf(d);
+                dices[i] = 0;
+                if (!isDouble && i == 0) {
+                    dices[0] = dices[1];
+                    dices[1] = 0;
+                }
+            }
         }
+
+        used.Clear();
+
         instance.FixDices();
     }
 
     void FixDices() {
-        var isempty = dices.Count == 0;
+        var isempty = dices.All(d => d == 0);
         _dices.gameObject.SetActive(!isempty);
 
         if (!isempty) {
             if (isDouble) {
                 _dices.GetChild(0).gameObject.SetActive(false);
-                var d = _dices.GetChild(1).GetComponent<RectTransform>();
-                d.gameObject.SetActive(true);
-                var l = _dices.GetChild(2);
-                l.gameObject.SetActive(true);
-                l.GetChild(1).GetComponent<TextMeshProUGUI>().text = $"{dices.Count}";
-                d.localPosition = new Vector3(-80, -60, 0);
-                d.GetComponent<Image>().sprite = this[dices[0]];
+
+                var dice = _dices.GetChild(1).GetComponent<RectTransform>();
+                dice.gameObject.SetActive(true);
+                dice.localPosition = new Vector3(-80, -60, 0);
+                dice.GetComponent<Image>().sprite = this[dices[0]];
+
+                var label = _dices.GetChild(2);
+                label.gameObject.SetActive(true);
+                label.GetChild(1).GetComponent<TextMeshProUGUI>().text = $"{dices.Count(d => d != 0)}";
             } else {
                 _dices.GetChild(2).gameObject.SetActive(false);
+                
                 var d1 = _dices.GetChild(1).GetComponent<RectTransform>();
                 d1.gameObject.SetActive(true);
                 d1.localPosition = new Vector3(0, -60, 0);
-                    d1.GetComponent<Image>().sprite = this[dices[0]];
-                if (dices.Count == 1) {
-                    _dices.GetChild(0).gameObject.SetActive(false);
+                d1.GetComponent<Image>().sprite = this[dices[0]];
+
+                var d2 = _dices.GetChild(0).gameObject;
+                if (dices[1] == 0) {
+                    d2.SetActive(false);
                 } else {
-                    var d2 = _dices.GetChild(0).GetComponent<RectTransform>();
-                    d2.gameObject.SetActive(true);
+                    d2.SetActive(true);
                     d2.GetComponent<Image>().sprite = this[dices[1]];
                 }
             }
@@ -110,7 +126,7 @@ public class Dice : MonoBehaviour {
         static Sprite load(string n) => Addressables.LoadAssetAsync<Sprite>($"game[dice-{n}]").WaitForCompletion();
         for (int i = 0; i < 6;) _sprites[i] = load((++i).ToString());
     }
-    [SerializeField] static Sprite[] _sprites = new Sprite[6];
+    static readonly Sprite[] _sprites = new Sprite[6];
     public Sprite this[int i] {
         get {
             if (i < 1 || i > 6) return null;
@@ -120,7 +136,7 @@ public class Dice : MonoBehaviour {
 }
 
 public class UsedDices : IEnumerable<int> {
-    readonly int[] _dices = new int[4];
+    public readonly int[] _dices = new int[4];
             
     public int this[int i] {
         get => _dices[i];
@@ -128,15 +144,19 @@ public class UsedDices : IEnumerable<int> {
     }
 
     public void Set(IEnumerable<int> dices) {
+        Clear();
         int i = 0;
         foreach (var d in dices)
             _dices[i++] = d;
     }
     public void Set(int d, int c) {
+        Clear();
         for (int i = 0; i < c; i++)
             _dices[i] = d;
     }
     public void Clear() => Array.Clear(_dices, 0, 4);
+
+    public void Use() => Dice.UseDices(this);
 
     public IEnumerator<int> GetEnumerator() => ((IEnumerable<int>)_dices).GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
