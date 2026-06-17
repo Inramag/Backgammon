@@ -226,8 +226,13 @@ namespace Offline {
             if (!iskey) {
                 tcell.usedDices.Use();
                 
-                isFromHead = (iswturn ? iswfirst : isbfirst) && (fcell.id == (iswturn ? 0 : 12)) ?
-                    (Dice.isDouble ? fcell.count < 14 : true) : true;
+                if (fcell.id == (iswturn ? 0 : 12)) {
+                    if (iswturn ? iswfirst : isbfirst) {
+                        if (Dice.isDouble) isFromHead = fcell.count < 14;
+                        else isFromHead = true;
+                    }
+                    else isFromHead = true;
+                }
             }
 
             foreach(var c in cells.Where(c => c.istarget)) {
