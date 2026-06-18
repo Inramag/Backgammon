@@ -244,14 +244,20 @@ namespace Offline {
             fcell = null;
             tcell = null;
 
-            if (Dice.dices.All(d => d == 0)) isturncompl = true;
+            if (Dice.dices[0] == 0 || !CanMove()) isturncompl = true;
         }
 
         bool CanMove() {
-            var home = iswturn ? homew : homeb;
-            var allhome = true;
+            foreach(var c in cells.Where(c => c.side == (Cell.Side)(iswturn ? 2 : 1))) {
+                var b = CanMove(c);
+                Debug.Log($"Can Move () > id {c.id}, {b}");
+                if (b) return true;
+            }
+            
             {
-                var hcells = new Vector2Int(iswturn ? 18 : 6, iswturn ? 23 : 11);
+                var home = iswturn ? homew : homeb;
+                var allhome = true;
+                Vector2Int hcells = iswturn ? new(18, 23) : new(6, 11);
                 foreach(var c in cells) {
                     if (c.side != (Cell.Side)(iswturn ? 2 : 1)) continue;
                     if (!c.id.InRange(hcells.x, hcells.y)) {
@@ -259,27 +265,21 @@ namespace Offline {
                         break;
                     }
                 }
-            }
 
-            foreach(var c in cells.Where(c => c.side == (Cell.Side)(iswturn ? 2 : 1))) {
-                var b = CanMove(c);
-                Debug.Log($"Can Move () > id {c.id}, {b}");
-                if (b) return true;
-            }
-
-            if (allhome) {
-                foreach(var c in cells.Where(c => c.side == (Cell.Side)(iswturn ? 2 : 1))) {
-                    if (!Dice.isDouble) {
+                if (allhome) {
+                    foreach(var c in cells.Where(c => c.side == (Cell.Side)(iswturn ? 2 : 1))) {
+                        if (!Dice.isDouble) {
+                            foreach(var d in Dice.dices) {
+                                if (d == 0) break;
+                                if (home.CanAdd(c, d)) return true;
+                            }
+                        }
+                        var sum = 0;
                         foreach(var d in Dice.dices) {
                             if (d == 0) break;
-                            if (home.CanAdd(c, d)) return true;
+                            sum += d;
+                            if (home.CanAdd(c, sum)) return true;
                         }
-                    }
-                    var sum = 0;
-                    foreach(var d in Dice.dices) {
-                        if (d == 0) break;
-                        sum += d;
-                        if (home.CanAdd(c, sum)) return true;
                     }
                 }
             }
@@ -294,6 +294,7 @@ namespace Offline {
             return false;
         }
         bool CanMove(Cell c, int d) {
+            if (c.id is 0 or 12 && isFromHead) return false;
             var t = c.id + d;
             var b1 = iswturn ? (t > 23) : (c.id < 12 && t > 11);
             t %= 24;
@@ -335,7 +336,7 @@ namespace Offline {
         }
         public void ExitNo() {
             exitmenu.SetActive(false);
-                Time.timeScale = 1;
+            Time.timeScale = 1;
         }
     }
 }
