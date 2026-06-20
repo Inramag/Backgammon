@@ -87,7 +87,7 @@ public class Dice : MonoBehaviour {
         instance.FixDices();
     }
 
-    void FixDices() {
+    public void FixDices() {
         var isempty = dices.All(d => d == 0);
         _dices.gameObject.SetActive(!isempty);
 

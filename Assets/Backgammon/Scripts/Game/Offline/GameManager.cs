@@ -105,8 +105,12 @@ namespace Offline {
 
         IEnumerator Turn() {
             yield return wait(0.5f);
-            yield return StartCoroutine(Dice.instance.Roll());
-            if (!CanMove()) yield break;
+            while (true) {
+                yield return StartCoroutine(Dice.instance.Roll());
+                if (CanMove()) break;
+                Dice.dices.Clear();
+                Dice.instance.FixDices();
+            }
             
             var p = iswturn ? p1 : p2;
             var ar = p.transform.GetChild(0).gameObject;
@@ -250,7 +254,6 @@ namespace Offline {
         bool CanMove() {
             foreach(var c in cells.Where(c => c.side == (Cell.Side)(iswturn ? 2 : 1))) {
                 var b = CanMove(c);
-                Debug.Log($"Can Move () > id {c.id}, {b}");
                 if (b) return true;
             }
             
@@ -288,6 +291,7 @@ namespace Offline {
         }
         bool CanMove(Cell c) {
             foreach(var d in Dice.dices) {
+                if (d == 0) break;
                 var b = CanMove(c, d);
                 if (b) return true;
             }

@@ -14,7 +14,6 @@ namespace Offline {
                 _y -= 40;
             } else _y += 40;
             _y = transform.position.y - _y;
-            Debug.Log($"_y = {_y}");
         }
 
         protected override void SetTarget(bool ist) => _img.color = new Color(1, 1, 1, ist ? 0.02f : 0);
