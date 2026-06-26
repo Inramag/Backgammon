@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Offline {
+namespace Backgammon.Game {
     public class Cell : MoveTarget  {
         public enum Side : byte { None, Black, White }
 

@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Offline {
+namespace Backgammon.Game {
     public abstract class MoveTarget : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler {
         public Cell.Side side;
         

@@ -3,7 +3,7 @@ using Extensions;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Offline {
+namespace Backgammon.Game {
     public class Home : MoveTarget {
         [SerializeField] RectTransform rtransform;
 

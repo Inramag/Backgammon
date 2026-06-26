@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace Offline {
+namespace Backgammon.Game {
     public class GameManager : MonoBehaviour {
         public static GameManager instance;
 
