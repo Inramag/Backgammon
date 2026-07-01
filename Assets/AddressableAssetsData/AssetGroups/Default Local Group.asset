@@ -15,6 +15,11 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: 730cc9ac22ff83045984e5717cb38f12
   m_SerializeEntries:
+  - m_GUID: e7b3bdbd25fc75746bbb79136a2e4b8a
+    m_Address: prefabs/board
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e853ec4468aab454fad2f120903bc080
     m_Address: game
     m_ReadOnly: 0

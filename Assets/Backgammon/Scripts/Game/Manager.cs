@@ -1,25 +1,19 @@
 using System.Collections;
 using System.Linq;
 using Extensions;
-using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 namespace Backgammon.Game {
-    public class GameManager : MonoBehaviour {
-        public static GameManager instance;
+    using UI;
 
-        [SerializeField] Image blocker;
-        [SerializeField] GameObject exitmenu;
-        [SerializeField] GameObject endmenu;
-        [SerializeField] TextMeshProUGUI endlbl;
+    public class Manager : MonoBehaviour {
+        public static Manager instance;
 
         [SerializeField] GameObject b_checker, w_checker;
 
-        public Home homeb, homew;
-        [SerializeField] TextMeshProUGUI p1, p2;
+        [SerializeField] Home homeb, homew;
+        [SerializeField] Player p1, p2;
 
         public readonly Cell[] cells = new Cell[24];
 
@@ -35,40 +29,32 @@ namespace Backgammon.Game {
         bool isturncompl = false;
         bool isvictory = false;
 
-        // active player color / inactive player color
-        readonly Color actpcolor = new(1, 1, 1), inactpcolor = new(0.6f, 0.6f, 0.6f);
-
         void Awake() {
             instance = this;
 
+            var ct = transform.GetChild(0);
             for (int i = 0; i < 24; i++) {
-                cells[i] = transform.GetChild(i).GetComponent<Cell>();
+                cells[i] = ct.GetChild(i).GetComponent<Cell>();
             }
 
-            p1.color = inactpcolor;
-            p2.color = inactpcolor;
-        }
-
-        void Update() {
-            if (!endmenu.activeSelf && !isvictory && !isMoving && Keyboard.current.escapeKey.wasPressedThisFrame) {
-                var isactive = !exitmenu.activeSelf;
-                exitmenu.SetActive(isactive);
-                blocker.raycastTarget = !isactive;
-                Time.timeScale = isactive ? 0 : 1;
-            }
+            p1.active = false;
+            p2.active = false;
+            
+            p1.gameObject.SetActive(false);
+            p2.gameObject.SetActive(false);
         }
 
         IEnumerator wait(float s) { yield return new WaitForSeconds(s); }
 
         IEnumerator Start() {
-            var c = blocker.color;
-            while (blocker.color.a > 0) {
+            var c = Blocker.color;
+            while (Blocker.color.a > 0) {
                 c.a -= Time.deltaTime * 2;
-                blocker.color = c;
+                Blocker.color = c;
                 yield return null;
             }
             c.a = 0;
-            blocker.color = c;
+            Blocker.color = c;
 
             yield return wait(0.5f);
 
@@ -99,8 +85,8 @@ namespace Backgammon.Game {
             while (!isvictory) yield return StartCoroutine(Turn());
 
             yield return wait(1f);
-            endmenu.SetActive(true);
-            blocker.raycastTarget = false;
+            End.Finish(iswturn ? "White" : "Black");
+            Blocker.active = false;
         }
 
         IEnumerator Turn() {
@@ -115,14 +101,14 @@ namespace Backgammon.Game {
             var p = iswturn ? p1 : p2;
             var ar = p.transform.GetChild(0).gameObject;
 
-            p.color = actpcolor;
+            p.active = true;
             ar.SetActive(true);
-            blocker.raycastTarget = false;
+            Blocker.active = false;
 
             while(!isturncompl) yield return null;
 
-            blocker.raycastTarget = true;
-            p.color = inactpcolor;
+            Blocker.active = true;
+            p.active = false;
             ar.SetActive(false);
 
             isturncompl = false;
@@ -214,7 +200,7 @@ namespace Backgammon.Game {
 
             var iskey = false;
             while(isMoving) {
-                iskey = Keyboard.current.escapeKey.wasPressedThisFrame;
+                iskey = Keyboard.current.escapeKey.wasPressedThisFrame || Mouse.current.rightButton.wasPressedThisFrame;
                 if (iskey) {
                     isMoving = false;
                     fcell.Add(selectedChecker);
@@ -314,33 +300,9 @@ namespace Backgammon.Game {
             return tc.CanAdd(c);
         }
 
-        public void End(string text) {
+        public void Finish() {
             isturncompl = true;
             isvictory = true;
-            endlbl.text = text;
-        }
-
-        public void ExitYes() {
-            StopAllCoroutines();
-            Time.timeScale = 1;
-            StartCoroutine(_ExitYes());
-        }
-        private IEnumerator _ExitYes() {
-            var c = blocker.color;
-            while (blocker.color.a < 1) {
-                c.a += Time.deltaTime * 4;
-                blocker.color = c;
-                yield return null;
-            }
-            c.a = 1;
-            blocker.color = c;
-
-            SceneManager.LoadScene(0);
-            yield return null;
-        }
-        public void ExitNo() {
-            exitmenu.SetActive(false);
-            Time.timeScale = 1;
         }
     }
 }

@@ -31,14 +31,16 @@ namespace Backgammon.Game {
         public static Vector3 targpos;
         protected float _y;
         public abstract void OnPointerEnter(PointerEventData _);
-        public void OnPointerClick(PointerEventData _) {
-            if (GameManager.instance.isMoving) {
+        public void OnPointerClick(PointerEventData data) {
+            if (data.button != PointerEventData.InputButton.Left) return;
+
+            if (Manager.instance.isMoving) {
                 if (!_ist) return;
                 
-                side = GameManager.instance.fcell.side;
-                Add(GameManager.instance.selectedChecker);
-                GameManager.instance.tcell = this;
-                GameManager.instance.isMoving = false;
+                side = Manager.instance.fcell.side;
+                Add(Manager.instance.selectedChecker);
+                Manager.instance.tcell = this;
+                Manager.instance.isMoving = false;
 
                 OnMove();
             } else OnTake();

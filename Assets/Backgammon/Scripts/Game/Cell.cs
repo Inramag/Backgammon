@@ -22,7 +22,7 @@ namespace Backgammon.Game {
             for (int i = _id; c < 6;) {
                 i = i == 23 ? 0 : i + 1;
 
-                var cell = GameManager.instance.cells[i];
+                var cell = Manager.instance.cells[i];
                 var b = cell.side == fc.side;
                 
                 if (!b || (cell == fc && fc.count == 0)) break;
@@ -32,7 +32,7 @@ namespace Backgammon.Game {
             for (int i = _id; c < 6;) {
                 i = i == 0 ? 23 : i - 1;
 
-                var cell = GameManager.instance.cells[i];
+                var cell = Manager.instance.cells[i];
                 var b = cell.side == fc.side;
                 
                 if (!b || (cell == fc && fc.count == 0)) break;
@@ -65,9 +65,9 @@ namespace Backgammon.Game {
         public override void OnPointerEnter(PointerEventData _) => targpos = new(transform.position.x, _y, 0);
 
         protected override void OnTake() {
-            if (count != 0 && side == (Side)(GameManager.instance.iswturn ? 2 : 1) &&
-                !(id == (side == Side.White ? 0 : 12) && GameManager.instance.isFromHead))
-                StartCoroutine(GameManager.instance.StartMove(this));
+            if (count != 0 && side == (Side)(Manager.instance.iswturn ? 2 : 1) &&
+                !(id == (side == Side.White ? 0 : 12) && Manager.instance.isFromHead))
+                StartCoroutine(Manager.instance.StartMove(this));
         }
         protected override void OnMove() {}
 

@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Backgammon.Game {
+    using UI;
+
     public class Home : MoveTarget {
         [SerializeField] RectTransform rtransform;
 
@@ -35,13 +37,13 @@ namespace Backgammon.Game {
         }
 
         public override void OnPointerEnter(PointerEventData _) {
-            if ((Cell.Side)(GameManager.instance.iswturn ? 2 : 1) == side && _ist)
+            if ((Cell.Side)(Manager.instance.iswturn ? 2 : 1) == side && _ist)
                 targpos = new(transform.position.x, _y, 0);
         }
 
         protected override void OnTake() {}
         protected override void OnMove() {
-            if (count == 15) GameManager.instance.End($"{(GameManager.instance.iswturn ? "White" : "Black")} wins!");
+            if (count == 15) Manager.instance.Finish();
         }
     }
 }
