@@ -16,7 +16,7 @@ MonoBehaviour:
   m_GUID: 730cc9ac22ff83045984e5717cb38f12
   m_SerializeEntries:
   - m_GUID: e7b3bdbd25fc75746bbb79136a2e4b8a
-    m_Address: prefabs/board
+    m_Address: prefabs/offline/board
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

@@ -4,6 +4,8 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 namespace Backgammon.Menu {
+    using Game;
+    
     public class Main : MonoBehaviour {
         [SerializeField] Image blocker;
 
@@ -20,8 +22,9 @@ namespace Backgammon.Menu {
             blocker.raycastTarget = false;
         }
 
-        public void StartGame() => StartCoroutine(_StartGame());
-        IEnumerator _StartGame() {
+        public void StartGame(int flag) => StartCoroutine(_StartGame(flag));
+        IEnumerator _StartGame(int flag) {
+            Bootstrap.flags[0] = (byte)flag;
             blocker.raycastTarget = true;
 
             var c = blocker.color;
