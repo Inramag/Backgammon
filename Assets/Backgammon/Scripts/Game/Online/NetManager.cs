@@ -8,14 +8,17 @@ using Unity.Services.Lobbies;
 using Unity.Services.Lobbies.Models;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
+using Unity.Netcode.Transports.UTP;
 
 namespace Backgammon.Game.Online {
     public class NetManager : MonoBehaviour {
         public static NetManager instance;
         static NetworkManager net;
+        static UnityTransport transport;
         async void Awake() {
             instance = this;
             net = NetworkManager.Singleton;
+            transport = GetComponent<UnityTransport>();
 
             await UnityServices.InitializeAsync();
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
@@ -53,6 +56,18 @@ namespace Backgammon.Game.Online {
                 }
             });
             return relay;
+        }
+
+        public static async Task StartRound() {
+            var frelay = await Free();
+            if (frelay == null) {
+                var relay = await Create();
+                transport.SetRelayServerData(relay.ToRelayServerData("dtls"));
+                net.StartHost();
+            } else {
+                transport.SetRelayServerData((await RelayService.Instance.JoinAllocationAsync(frelay)).ToRelayServerData("dtls"));
+                net.StartClient();
+            }
         }
     }
 }
