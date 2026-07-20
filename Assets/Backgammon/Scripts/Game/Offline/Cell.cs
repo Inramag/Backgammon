@@ -2,10 +2,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Backgammon.Game {
+namespace Backgammon.Game.Offline {
     public class Cell : MoveTarget  {
-        public enum Side : byte { None, Black, White }
-
         int _mcount = 6;
 
         void Awake() {

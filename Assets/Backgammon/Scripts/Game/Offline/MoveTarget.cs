@@ -3,9 +3,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Backgammon.Game {
+namespace Backgammon.Game.Offline {
     public abstract class MoveTarget : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler {
-        public Cell.Side side;
+        public Side side;
         
         public List<Transform> checkers = new ();
         public byte count => (byte)checkers.Count;

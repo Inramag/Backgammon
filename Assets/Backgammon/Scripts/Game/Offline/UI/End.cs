@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace Backgammon.Game.UI {
+namespace Backgammon.Game.Offline.UI {
     public class End : MonoBehaviour {
         static End instance;
         void Awake() => instance = this;

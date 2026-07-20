@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Backgammon/Scenes/main.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
-    path: Assets/Backgammon/Scenes/offline.unity
+    path: Assets/Backgammon/Scenes/game.unity
     guid: 908d39425b38d9f4384766c2ed4cc598
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 77d5d1b943363154882d60c23c13ec4b, type: 2}

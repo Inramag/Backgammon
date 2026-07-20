@@ -2,12 +2,19 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Unity.Services.Authentication;
 
 namespace Backgammon.Menu {
     using Game;
-    
+    using Unity.Services.Core;
+
     public class Main : MonoBehaviour {
         [SerializeField] Image blocker;
+
+        async void Awake() {
+            await UnityServices.InitializeAsync();
+            await AuthenticationService.Instance.SignInAnonymouslyAsync();
+        }
 
         IEnumerator Start() {
             var c = blocker.color;
@@ -22,9 +29,9 @@ namespace Backgammon.Menu {
             blocker.raycastTarget = false;
         }
 
-        public void StartGame(int flag) => StartCoroutine(_StartGame(flag));
-        IEnumerator _StartGame(int flag) {
-            Bootstrap.flags[0] = (byte)flag;
+        public void StartGame(bool flag) => StartCoroutine(_StartGame(flag));
+        IEnumerator _StartGame(bool isonline) {
+            Bootstrap.flags[0] = (byte)(isonline ? 1 : 0);
             blocker.raycastTarget = true;
 
             var c = blocker.color;

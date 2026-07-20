@@ -3,15 +3,13 @@ using Extensions;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Backgammon.Game {
-    using UI;
-
+namespace Backgammon.Game.Offline {
     public class Home : MoveTarget {
         [SerializeField] RectTransform rtransform;
 
         void Start() {
             _y = rtransform.rect.height/2;
-            if (side == Cell.Side.Black) {
+            if (side == Side.Black) {
                 _y *= -1;
                 _y -= 40;
             } else _y += 40;
@@ -22,13 +20,13 @@ namespace Backgammon.Game {
 
         public bool CanAdd(Cell c, int d) {
             if (c.side != side) return false;
-            Vector2Int v = c.side == Cell.Side.White ? new(18, 23) : new(6, 11);
+            Vector2Int v = c.side == Side.White ? new(18, 23) : new(6, 11);
             if (!c.id.InRange(v.x, v.y)) return false;
             return c.id + d > v.y;
         }
         protected override bool OnCanAdd(Cell fc) {
             foreach (var d in Dice.dices.Where(d => d != 0))
-                if (fc.id + d > (side == Cell.Side.White ? 23 : 11 )) return true;
+                if (fc.id + d > (side == Side.White ? 23 : 11 )) return true;
             return false;
         }
 
@@ -37,7 +35,7 @@ namespace Backgammon.Game {
         }
 
         public override void OnPointerEnter(PointerEventData _) {
-            if ((Cell.Side)(Manager.instance.iswturn ? 2 : 1) == side && _ist)
+            if ((Side)(Manager.instance.iswturn ? 2 : 1) == side && _ist)
                 targpos = new(transform.position.x, _y, 0);
         }
 

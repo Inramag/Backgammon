@@ -8,7 +8,7 @@ using UnityEngine.UI;
 using UnityEngine.AddressableAssets;
 using Extensions;
 
-namespace Backgammon.Game {
+namespace Backgammon.Game.Offline {
     public class Dice : MonoBehaviour {
         public static Dice instance { get; private set; }
         void Awake() => instance = this;
@@ -83,7 +83,7 @@ namespace Backgammon.Game {
                 }
             }
 
-            used.Clear();
+            used.clear();
 
             instance.FixDices();
         }
@@ -134,32 +134,5 @@ namespace Backgammon.Game {
                 return _sprites[i - 1];
             }
         }
-    }
-
-    public class UsedDices : IEnumerable<int> {
-        public readonly int[] _dices = new int[4];
-            
-        public int this[int i] {
-            get => _dices[i];
-            set => _dices[i] = value;
-        }
-
-        public void Set(IEnumerable<int> dices) {
-            Clear();
-            int i = 0;
-            foreach (var d in dices)
-                _dices[i++] = d;
-        }
-        public void Set(int d, int c) {
-            Clear();
-            for (int i = 0; i < c; i++)
-                _dices[i] = d;
-        }
-        public void Clear() => Array.Clear(_dices, 0, 4);
-
-        public void Use() => Dice.UseDices(this);
-
-        public IEnumerator<int> GetEnumerator() => ((IEnumerable<int>)_dices).GetEnumerator();
-        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

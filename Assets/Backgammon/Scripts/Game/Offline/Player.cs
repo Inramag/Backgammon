@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace Backgammon.Game {
+namespace Backgammon.Game.Offline {
     public class Player : MonoBehaviour {
         [SerializeField] TextMeshProUGUI _t;
 

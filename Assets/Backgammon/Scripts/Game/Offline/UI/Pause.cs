@@ -3,9 +3,13 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
-namespace Backgammon.Game.UI {
+using Backgammon.Game.UI;
+
+namespace Backgammon.Game.Offline.UI {
     public class Pause : MonoBehaviour {
-        [SerializeField] Canvas canvas;
+        Canvas canvas;
+        void Awake() => canvas = GetComponent<Canvas>();
+        
         void Update() {
             if (End.active) return;
             if (Manager.instance.isMoving) return;

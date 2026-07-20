@@ -4,7 +4,9 @@ using Extensions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Backgammon.Game {
+using Backgammon.Game.UI;
+
+namespace Backgammon.Game.Offline {
     using UI;
 
     public class Manager : MonoBehaviour {
@@ -60,8 +62,8 @@ namespace Backgammon.Game {
 
             var wcell = cells[0];
             var bcell = cells[12];
-            wcell.side = Cell.Side.White;
-            bcell.side = Cell.Side.Black;
+            wcell.side = Side.White;
+            bcell.side = Side.Black;
 
             for (int i = 0; i < 15; i++) {
                 yield return wait(0.1f);
@@ -131,7 +133,7 @@ namespace Backgammon.Game {
                 if (ishome) {
                     allhome = true;
                     foreach(var c in cells) {
-                        if (c.side != (Cell.Side)(iswturn ? 2 : 1)) continue;
+                        if (c.side != (Side)(iswturn ? 2 : 1)) continue;
                         if (!c.id.InRange(hcells.x, hcells.y)) {
                             allhome = false;
                             break;
@@ -144,7 +146,7 @@ namespace Backgammon.Game {
                         for (int i = 0; i < dices.Length; i++) {
                             sum += dices[0];
                             if (cell.id + sum > hcells.y) {
-                                home.usedDices.Set(dices[0], i+1);
+                                home.usedDices.set(dices[0], i+1);
                                 home.istarget = true;
                                 break;
                             }
@@ -163,7 +165,7 @@ namespace Backgammon.Game {
                             }
                         }
                         if (dcs[0] != 0) {
-                            home.usedDices.Set(dcs);
+                            home.usedDices.set(dcs);
                             home.istarget = true;
                         }
                     }
@@ -173,7 +175,7 @@ namespace Backgammon.Game {
             bool checktarg(Cell c, out Cell t, params int[] d) {
                 if (CanMove(c, d.Sum(), out t) is var b && b) {
                     t.istarget = true;
-                    t.usedDices.Set(d);
+                    t.usedDices.set(d);
                 }
                 return b;
             }
@@ -185,7 +187,7 @@ namespace Backgammon.Game {
                 for (int i = 1; i <= dices.Length; i++) {
                     sum += d;
                     if(!checktarg(fcell, out var tc, sum)) break;
-                    tc.usedDices.Set(d, i);
+                    tc.usedDices.set(d, i);
                 }
             } else {
                 Cell tc;
@@ -214,7 +216,7 @@ namespace Backgammon.Game {
 
             if (fcell.count == 0) fcell.side = 0;
             if (!iskey) {
-                tcell.usedDices.Use();
+                tcell.usedDices.use();
                 
                 if (fcell.id == (iswturn ? 0 : 12)) {
                     if (iswturn ? iswfirst : isbfirst) {
@@ -227,7 +229,7 @@ namespace Backgammon.Game {
 
             foreach(var c in cells.Where(c => c.istarget)) {
                 c.istarget = false;
-                c.usedDices.Clear();
+                c.usedDices.clear();
             }
             home.istarget = false;
 
@@ -238,7 +240,7 @@ namespace Backgammon.Game {
         }
 
         bool CanMove() {
-            foreach(var c in cells.Where(c => c.side == (Cell.Side)(iswturn ? 2 : 1))) {
+            foreach(var c in cells.Where(c => c.side == (Side)(iswturn ? 2 : 1))) {
                 var b = CanMove(c);
                 if (b) return true;
             }
@@ -248,7 +250,7 @@ namespace Backgammon.Game {
                 var allhome = true;
                 Vector2Int hcells = iswturn ? new(18, 23) : new(6, 11);
                 foreach(var c in cells) {
-                    if (c.side != (Cell.Side)(iswturn ? 2 : 1)) continue;
+                    if (c.side != (Side)(iswturn ? 2 : 1)) continue;
                     if (!c.id.InRange(hcells.x, hcells.y)) {
                         allhome = false;
                         break;
@@ -256,7 +258,7 @@ namespace Backgammon.Game {
                 }
 
                 if (allhome) {
-                    foreach(var c in cells.Where(c => c.side == (Cell.Side)(iswturn ? 2 : 1))) {
+                    foreach(var c in cells.Where(c => c.side == (Side)(iswturn ? 2 : 1))) {
                         if (!Dice.isDouble) {
                             foreach(var d in Dice.dices) {
                                 if (d == 0) break;
